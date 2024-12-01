@@ -5,7 +5,7 @@ class WordSet {
 
   // TODO: Allow place for a filepath for the photo
   // TODO: allow for complex rhythms like hen hen-ga llina
-  constructor(name, words, possiblePatterns, allowedRhythms = []) {
+  constructor(name, words, possiblePatterns, allowedRhythms = new Set()) {
     // Takes in allowed rhythms, which if empty will allow all words
     // and if not will allow words whose rhythms are in allowed rhythms
     this.name = name;
@@ -14,7 +14,7 @@ class WordSet {
     // All the words that could show up
     this.possibleWords = new Set([]);
 
-    if (allowedRhythms.length === 0) {
+    if (allowedRhythms.size === 0) {
       this.words = words;
       for (let word in words) {
         if (words.hasOwnProperty(word)) {
@@ -25,7 +25,7 @@ class WordSet {
       for (let word in words) {
         if (words.hasOwnProperty(word)) {
           let rhythm = words[word];
-          if (allowedRhythms.includes(rhythm)) {
+          if (allowedRhythms.has(rhythm)) {
             this.words[word] = rhythm;
             this.possibleWords.add(word);
           }
@@ -71,7 +71,7 @@ class WordSet {
 // TODO: Make NoteDeck not just be wordsets but also have a version
 // That works with lyrics from songs
 class NoteDeck {
-  constructor(deckname, allowedRhythms = []) {
+  constructor(deckname, allowedRhythms = new Set()) {
     this.deckname = deckname;
     this.wordsets = [];
     // The possible word configurations that can come up
@@ -80,7 +80,7 @@ class NoteDeck {
     // cats and gatos
   }
 
-  static fromJSON(json, allowedRhythms = []) {
+  static fromJSON(json, allowedRhythms = new Set()) {
     let res = new NoteDeck(json["deck_name"], allowedRhythms);
     json["question_set"].forEach((setOfWords) => {
       const genWordSet = new WordSet(
