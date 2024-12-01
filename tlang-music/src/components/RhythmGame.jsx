@@ -8,6 +8,11 @@ import NoteDeck from "../models/NoteDeck";
 /* COMPONENTS */
 import GameButton from "./GameButton";
 import NoteField from "./NoteField";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// TODO: Doesn't work right now because bootstrap CSS isn't imported...
+// But do I want it?
+
+// import { ButtonGroup } from "react-bootstrap";
 
 /* ICONS */
 import { IoIosMusicalNotes } from "react-icons/io";
@@ -34,9 +39,9 @@ function RhythmGame() {
   const [answer, setAnswer] = useState([]);
 
   const rhythmDisplay = {
-    "ei_2": "titi",
-    "qu_1": "ta"
-  }
+    ei_2: "titi",
+    qu_1: "ta",
+  };
 
   const beats = 4;
 
@@ -106,21 +111,23 @@ function RhythmGame() {
       <NoteField spaces={beats} userInput={answer} toDisplay={rhythmDisplay} />
       <br />
       <div>
-        <GameButton
-          onClick={() => {
-            addToAnswer("qu_1");
-          }}
-        >
-          TA
-        </GameButton>
-        <GameButton
-          onClick={() => {
-            addToAnswer("ei_2");
-          }}
-        >
-          TITI
-          <IoIosMusicalNotes />
-        </GameButton>
+        {/* <div className="btn-group"> */}
+          <GameButton
+            onClick={() => {
+              addToAnswer("qu_1");
+            }}
+          >
+            TA
+          </GameButton>
+          <GameButton
+            onClick={() => {
+              addToAnswer("ei_2");
+            }}
+          >
+            TITI
+            <IoIosMusicalNotes />
+          </GameButton>
+        {/* </div> */}
         <GameButton
           className="delete"
           onClick={deleteFromAnswer}

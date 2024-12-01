@@ -50,6 +50,14 @@
       "possible_patterns": []
     },
     {
+      "name": "pavo_turkey",
+      "words": {
+        "pavo": "ei_2",
+        "turkey": "ei_2"
+      },
+      "possible_patterns": []
+    },
+    {
       "name": "lobo_wolf",
       "words": {
         "wolf": "qu_1",

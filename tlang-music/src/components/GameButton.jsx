@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 const GameButton = ({
   children,
   onClick,
-  color = "success",
+  color = "secondary",
   disabled = false,
   className = "",
 }) => {
@@ -13,7 +13,8 @@ const GameButton = ({
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       type="button"
-      className={`game-btn btn btn-${color} ${className}`}
+      // className={`game-btn btn btn-${color} ${className}`}
+      className={`game-btn btn ${className}`}
       onClick={onClick}
       disabled={disabled}
     >
