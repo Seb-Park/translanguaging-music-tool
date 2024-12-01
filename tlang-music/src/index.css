@@ -58,11 +58,41 @@ button:focus-visible {
   align-content: center;
 }
 
+.game-btn {
+  margin: 20px 10px;
+}
+
+.game-btn.submit:enabled {
+  background-color: rgb(69, 161, 69);
+  color: white;
+}
+
+.game-btn.delete:enabled {
+  background-color: rgb(186, 87, 87);
+  color: white;
+}
+
 .note-field {
   display: flex;
   gap: 10px;
+  align-items: center;
   align-content: center;
   justify-content: center;
+}
+
+.note-cell {
+  display: "flex";
+  flex-direction: column;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(234, 250, 255);
+  border-radius: 3px;
+  justify-content: center;
+  align-items: center;
+}
+
+.note-cell.filled {
+  background-color: lightblue;
 }
 
 @media (prefers-color-scheme: light) {

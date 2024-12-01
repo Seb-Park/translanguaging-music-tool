@@ -1,7 +1,25 @@
+/* LIBRARIES */
 import { useState } from "react";
-import Button from "./Button";
 import { motion } from "motion/react";
+
+/* DATACLASSES */
+import NoteDeck from "../models/NoteDeck";
+
+/* COMPONENTS */
+import GameButton from "./GameButton";
 import NoteField from "./NoteField";
+
+/* ICONS */
+import { IoIosMusicalNotes } from "react-icons/io";
+import { FaDeleteLeft as DeleteIcon } from "react-icons/fa6";
+import { FaCheckCircle as CheckIcon } from "react-icons/fa";
+import { IoPlaySkipForward as SkipIcon } from "react-icons/io5";
+import { IoMdRefresh as ClearIcon } from "react-icons/io";
+
+/* DATA */
+import DefaultNoteSet from "/src/assets/decks/default.json";
+
+/** TODO: check if answer full */
 
 function RhythmGame() {
   // Separate out logic here: https://stackoverflow.com/questions/69332889/reactjs-separation-of-ui-and-business-logic
@@ -17,6 +35,8 @@ function RhythmGame() {
   const possibleRhythms = ["ta", "titi"];
 
   const beats = 4;
+
+  const noteDeck = NoteDeck.fromJSON(DefaultNoteSet)
 
   const addToAnswer = (item) => {
     if (answer.length < beats) {
@@ -40,6 +60,7 @@ function RhythmGame() {
       newPrompt.push(possibleRhythms[random]);
       count++;
     }
+    console.log(noteDeck.generateQuestion(beats))
     return newPrompt;
   };
 
@@ -64,31 +85,65 @@ function RhythmGame() {
     }
   };
 
+  const values = Object.freeze({
+    TA: Symbol("ta"),
+    TITI: Symbol("titi"),
+    TIRITIRI: Symbol("tiri-tiri"),
+    TITIRI: Symbol("ti-tiri"),
+    TIRITI: Symbol("tiri-ti"),
+    TU: Symbol("tu"),
+  });
+
   return (
     <div className="rhythm-game">
       <h1>Juego De Ritmo - Rhythm Game</h1>
       <h2>Imita el Ritmo - Imitate the Rhythm</h2>
       <p>{prompt.join("-")}</p>
-      <NoteField spaces={beats} userInput={answer}/>
-      <Button
-        onClick={() => {
-          addToAnswer("ta");
-        }}
-      >
-        TA
-      </Button>
-      <Button
-        onClick={() => {
-          addToAnswer("titi");
-        }}
-      >
-        TITI
-      </Button>
-      <Button onClick={deleteFromAnswer}>del</Button>
-      <Button onClick={clearAnswer}>clear</Button>
-      <br></br>
-      <Button onClick={compareAnswer}>check</Button>
-      <Button onClick={skipPrompt}>skip</Button>
+      <NoteField spaces={beats} userInput={answer} />
+      <br />
+      <div>
+        <GameButton
+          onClick={() => {
+            addToAnswer("ta");
+          }}
+        >
+          TA
+        </GameButton>
+        <GameButton
+          onClick={() => {
+            addToAnswer("titi");
+          }}
+        >
+          TITI
+          <IoIosMusicalNotes />
+        </GameButton>
+        <GameButton
+          className="delete"
+          onClick={deleteFromAnswer}
+          disabled={answer.length === 0}
+        >
+          <DeleteIcon />
+        </GameButton>
+        <GameButton
+          className="submit"
+          onClick={compareAnswer}
+          disabled={answer.length !== beats}
+        >
+          <CheckIcon />
+        </GameButton>
+      </div>
+      {/* <br />
+      <br /> */}
+      <div>
+        <GameButton onClick={clearAnswer}>
+          <ClearIcon />
+        </GameButton>
+        <GameButton onClick={skipPrompt}>
+          <SkipIcon />
+        </GameButton>
+      </div>
+      {/* <br />
+      <br /> */}
     </div>
   );
 }

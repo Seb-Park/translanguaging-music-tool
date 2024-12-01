@@ -1,17 +1,15 @@
 import { motion } from "motion/react";
 
-const NoteCell = ({ note }) => {
+const NoteCell = ({ note = '' }) => {
   return (
     <motion.div
-      style={{
-        width: "50px",
-        height: "50px",
-        backgroundColor: "lightblue",
-        border: "1px solid #ccc",
-        borderRadius: "3px",
-      }}
-      initial={{ scale: 1 }}
+        key={note}
+      className={note === '' ? "note-cell" : "note-cell filled"}
+      initial={{ scale: 1.1 }}
+      animate={{ scale: 1 }}
+      exit={{ scale: 1 }}
     >
+      {note === '' && "X"}
       {note}
     </motion.div>
   );
