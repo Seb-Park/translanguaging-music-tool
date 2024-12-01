@@ -9,8 +9,7 @@ const NoteCell = ({ note = '' }) => {
       animate={{ scale: 1 }}
       exit={{ scale: 1 }}
     >
-      {note === '' && "X"}
-      {note}
+      {note === '' ? "X" : note}
     </motion.div>
   );
 };

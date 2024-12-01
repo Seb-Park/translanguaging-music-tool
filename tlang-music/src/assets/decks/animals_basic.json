@@ -1,0 +1,61 @@
+{
+  "deck_name": "animals_basic",
+  "question_set": [
+    {
+      "name": "gato_cat",
+      "words": {
+        "cat": "qu_1",
+        "gato": "ei_2"
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "perro_dog",
+      "words": {
+        "dog": "qu_1",
+        "perro": "ei_2"
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "rana_frog",
+      "words": {
+        "frog": "qu_1",
+        "rana": "ei_2"
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "oso_bear",
+      "words": {
+        "bear": "qu_1",
+        "oso": "ei_2"
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "pez_fish",
+      "words": {
+        "pez": "qu_1",
+        "fish": "qu_1"
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "gallo_rooster",
+      "words": {
+        "gallo": "ei_2",
+        "rooster": "ei_2"
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "lobo_wolf",
+      "words": {
+        "wolf": "qu_1",
+        "lobo": "ei_2"
+      },
+      "possible_patterns": []
+    }
+  ]
+}

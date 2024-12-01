@@ -18,6 +18,7 @@ import { IoMdRefresh as ClearIcon } from "react-icons/io";
 
 /* DATA */
 import DefaultNoteSet from "/src/assets/decks/default.json";
+import AnimalNoteSet from "/src/assets/decks/animals_basic.json";
 
 /** TODO: check if answer full */
 
@@ -32,11 +33,14 @@ function RhythmGame() {
 
   const [answer, setAnswer] = useState([]);
 
-  const possibleRhythms = ["ta", "titi"];
+  const rhythmDisplay = {
+    "ei_2": "titi",
+    "qu_1": "ta"
+  }
 
   const beats = 4;
 
-  const noteDeck = NoteDeck.fromJSON(DefaultNoteSet)
+  const noteDeck = NoteDeck.fromJSON(AnimalNoteSet);
 
   const addToAnswer = (item) => {
     if (answer.length < beats) {
@@ -53,21 +57,21 @@ function RhythmGame() {
   };
 
   const getNewPrompt = () => {
-    let count = 0;
-    let newPrompt = [];
-    while (count < beats) {
-      const random = Math.floor(Math.random() * possibleRhythms.length);
-      newPrompt.push(possibleRhythms[random]);
-      count++;
-    }
-    console.log(noteDeck.generateQuestion(beats))
-    return newPrompt;
+    const generatedPrompt = noteDeck.generateQuestion(beats);
+    const surface = generatedPrompt[0];
+    const rhythm = generatedPrompt[1];
+    return [surface, rhythm];
   };
 
-  const [prompt, setPrompt] = useState(getNewPrompt());
+  const newPrompt = getNewPrompt();
+
+  const [promptSurface, setPromptSurface] = useState(newPrompt[0]);
+  const [promptRhythm, setPromptRhythm] = useState(newPrompt[1]);
 
   const skipPrompt = () => {
-    setPrompt(getNewPrompt());
+    const newPrompt = getNewPrompt();
+    setPromptSurface(newPrompt[0]);
+    setPromptRhythm(newPrompt[1]);
     setAnswer([]);
   };
 
@@ -77,7 +81,7 @@ function RhythmGame() {
   };
 
   const compareAnswer = () => {
-    if (arraysEqual(prompt, answer)) {
+    if (arraysEqual(promptRhythm, answer)) {
       alert("correct!");
       skipPrompt();
     } else {
@@ -98,20 +102,20 @@ function RhythmGame() {
     <div className="rhythm-game">
       <h1>Juego De Ritmo - Rhythm Game</h1>
       <h2>Imita el Ritmo - Imitate the Rhythm</h2>
-      <p>{prompt.join("-")}</p>
-      <NoteField spaces={beats} userInput={answer} />
+      <p>{promptSurface.join("-")}</p>
+      <NoteField spaces={beats} userInput={answer} toDisplay={rhythmDisplay} />
       <br />
       <div>
         <GameButton
           onClick={() => {
-            addToAnswer("ta");
+            addToAnswer("qu_1");
           }}
         >
           TA
         </GameButton>
         <GameButton
           onClick={() => {
-            addToAnswer("titi");
+            addToAnswer("ei_2");
           }}
         >
           TITI
