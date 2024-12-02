@@ -15,7 +15,8 @@ import NoteField from "./NoteField";
 // import { ButtonGroup } from "react-bootstrap";
 
 /* ICONS */
-import { IoIosMusicalNotes } from "react-icons/io";
+import { IoIosMusicalNotes as TitiIcon } from "react-icons/io";
+import { IoIosMusicalNote as TaIcon } from "react-icons/io";
 import { FaDeleteLeft as DeleteIcon } from "react-icons/fa6";
 import { FaCheckCircle as CheckIcon } from "react-icons/fa";
 import { IoPlaySkipForward as SkipIcon } from "react-icons/io5";
@@ -38,14 +39,9 @@ function RhythmGame() {
 
   const [answer, setAnswer] = useState([]);
 
-  const rhythmDisplay = {
-    ei_2: "titi",
-    qu_1: "ta",
-  };
-
   const beats = 4;
 
-  const noteDeck = NoteDeck.fromJSON(AnimalNoteSet);
+  const noteDeck = NoteDeck.fromJSON(AnimalNoteSet, beats);
 
   const addToAnswer = (item) => {
     if (answer.length < beats) {
@@ -103,6 +99,14 @@ function RhythmGame() {
     TU: Symbol("tu"),
   });
 
+  const taIcon = TaIcon();
+  const titiIcon = TitiIcon();
+
+  const rhythmDisplay = {
+    ei_2: titiIcon,
+    qu_1: taIcon,
+  };
+
   return (
     <div className="rhythm-game">
       <h1>Juego De Ritmo - Rhythm Game</h1>
@@ -110,23 +114,24 @@ function RhythmGame() {
       <p>{promptSurface.join("-")}</p>
       <NoteField spaces={beats} userInput={answer} toDisplay={rhythmDisplay} />
       <br />
-      <div>
+      <div className="game-btn-row">
         {/* <div className="btn-group"> */}
-          <GameButton
-            onClick={() => {
-              addToAnswer("qu_1");
-            }}
-          >
-            TA
-          </GameButton>
-          <GameButton
-            onClick={() => {
-              addToAnswer("ei_2");
-            }}
-          >
-            TITI
-            <IoIosMusicalNotes />
-          </GameButton>
+        <GameButton
+          onClick={() => {
+            addToAnswer("qu_1");
+          }}
+        >
+          {/* {taIcon} */}
+          TA
+        </GameButton>
+        <GameButton
+          onClick={() => {
+            addToAnswer("ei_2");
+          }}
+        >
+          {/* {titiIcon} */}
+          TITI
+        </GameButton>
         {/* </div> */}
         <GameButton
           className="delete"
@@ -145,7 +150,7 @@ function RhythmGame() {
       </div>
       {/* <br />
       <br /> */}
-      <div>
+      <div className="game-btn-row">
         <GameButton onClick={clearAnswer}>
           <ClearIcon />
         </GameButton>
@@ -160,3 +165,14 @@ function RhythmGame() {
 }
 
 export default RhythmGame;
+
+
+/**
+ * Main TODO:
+ *  Get audio working
+ *  Get images working
+ *  Get labeled buttons working
+ *  Change styles
+ *  Add correct animation
+ *  Add handling for multi beat words like parajo
+ */

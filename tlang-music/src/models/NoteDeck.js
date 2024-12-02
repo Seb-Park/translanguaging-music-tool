@@ -1,20 +1,34 @@
 class WordSet {
-  // TODO: Structure to allow words to have multiple rhythms 
+  // TODO: Structure to allow words to have multiple rhythms
   // associated with them or compound words
   // e.g. Pumpkin pie or parajito would be [ei_2, qu_1] or [ei_2, ei_2]
 
   // TODO: Allow place for a filepath for the photo
   // TODO: allow for complex rhythms like hen hen-ga llina
-  constructor(name, words, possiblePatterns, allowedRhythms = new Set()) {
+  constructor(
+    name,
+    words,
+    possiblePatterns,
+    beats = 4,
+    allowedRhythms = new Set()
+  ) {
     // Takes in allowed rhythms, which if empty will allow all words
     // and if not will allow words whose rhythms are in allowed rhythms
     this.name = name;
+    this.beats = beats; // Number of beats in a pattern
     this.allowedRhythms = allowedRhythms;
     this.words = {};
     // All the words that could show up
+    this.lengthIndex = {}; // Object that goes from integers to a list of words
+    // that take up that many spaces or less
+    // This is used so that when a word is to be selected the word won't take
+    // up more spaces than is possible in the rhythm
     this.possibleWords = new Set([]);
 
+    this.resetLengthIndex();
+
     if (allowedRhythms.size === 0) {
+        // If allowedRhythms is empty, all 
       this.words = words;
       for (let word in words) {
         if (words.hasOwnProperty(word)) {
@@ -46,7 +60,15 @@ class WordSet {
     this.valid = this.possibleWords.size > 1;
   }
 
-  generatePattern(len) {
+  resetLengthIndex() {
+    const dictionary = {};
+    for (let i = this.beats; i > 0; i--) {
+        dictionary[i] = [];
+    }
+    this.lengthIndex = dictionary;
+  }
+
+  generatePattern() {
     /**
      * Given a pattern length, generates some combination of the words in
      * words in a random order. Returns the surface pattern and the underlying
@@ -56,7 +78,7 @@ class WordSet {
     let pattern = [];
     let rhythm = [];
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < this.beats; i++) {
       const keys = Object.keys(this.words);
       const randomWord = keys[Math.floor(Math.random() * keys.length)];
       const randomRhythm = this.words[randomWord];
@@ -71,22 +93,24 @@ class WordSet {
 // TODO: Make NoteDeck not just be wordsets but also have a version
 // That works with lyrics from songs
 class NoteDeck {
-  constructor(deckname, allowedRhythms = new Set()) {
+  constructor(deckname, beats = 4, allowedRhythms = new Set()) {
     this.deckname = deckname;
     this.wordsets = [];
+    this.beats = beats;
     // The possible word configurations that can come up
     // For example, a question that will generate from a combination of tas
     // and titis vs. a question that could generate from a combination of
     // cats and gatos
   }
 
-  static fromJSON(json, allowedRhythms = new Set()) {
-    let res = new NoteDeck(json["deck_name"], allowedRhythms);
+  static fromJSON(json, beats, allowedRhythms = new Set()) {
+    let res = new NoteDeck(json["deck_name"], beats, allowedRhythms);
     json["question_set"].forEach((setOfWords) => {
       const genWordSet = new WordSet(
         setOfWords["name"],
         setOfWords["words"],
         setOfWords["possible_patterns"],
+        beats,
         allowedRhythms
       );
       if (genWordSet.valid) {
@@ -96,10 +120,13 @@ class NoteDeck {
     return res;
   }
 
-  generateQuestion(len) {
+  generateQuestion() {
     const index = Math.floor(Math.random() * this.wordsets.length);
-    return this.wordsets[index].generatePattern(len);
+    return this.wordsets[index].generatePattern(this.beats);
   }
+
+  setNumberBeats() {}
+  // TODO: set the number of beats and also update children
 
   setAllowedRhythms() {}
   // TODO: set allowed rhythms

@@ -58,8 +58,17 @@ button:focus-visible {
   align-content: center;
 }
 
+.game-btn-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
 .game-btn {
   margin: 20px 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .game-btn.submit:enabled {
@@ -81,14 +90,16 @@ button:focus-visible {
 }
 
 .note-cell {
-  display: "flex";
+  display: flex;
   flex-direction: column;
+  text-align: center;
   width: 50px;
   height: 50px;
   background-color: rgb(234, 250, 255);
   border-radius: 3px;
   justify-content: center;
   align-items: center;
+  font-size: 30px;
 }
 
 .note-cell.filled {
