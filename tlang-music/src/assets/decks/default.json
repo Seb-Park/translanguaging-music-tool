@@ -4,8 +4,8 @@
     {
       "name": "default",
       "words": {
-        "ta": "qu_1",
-        "titi": "ei_2"
+        "ta": ["qu_1"],
+        "titi": ["ei_2"]
       },
       "possible_patterns": []
     }

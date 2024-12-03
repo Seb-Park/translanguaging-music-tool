@@ -28,20 +28,41 @@ class WordSet {
     this.resetLengthIndex();
 
     if (allowedRhythms.size === 0) {
-        // If allowedRhythms is empty, all 
+      // If allowedRhythms is empty, all
       this.words = words;
       for (let word in words) {
         if (words.hasOwnProperty(word)) {
-          this.possibleWords.add(word);
+          // TODO: need to check if number of rhythms is too high for beats
+          // TODO: need to index into lengthIndex
+          for (let i = words[word].length; i <= beats; i++) {
+            // Will add the word to the length index for all the lengths that
+            // are the length of the word or more
+            // e.g. "perro" takes up a single beat in two eighth notes and
+            // will therefore be accessible in 1, 2, 3, and 4 in a 4 beat deck.
+            //
+            // This will also make sure the word is included only if the word
+            // has equal or fewer beats than the beats in the measure, because
+            // otherwise it's not included in possible words
+            this.lengthIndex[i].add(word);
+            this.possibleWords.add(word);
+          }
         }
       }
     } else {
       for (let word in words) {
         if (words.hasOwnProperty(word)) {
-          let rhythm = words[word];
-          if (allowedRhythms.has(rhythm)) {
-            this.words[word] = rhythm;
-            this.possibleWords.add(word);
+          let rhythms = words[word];
+          // All of the rhythms in the word are allowed rhythms, i.e. every
+          // kind of rhythm in the sequence of rhythms of the word we allowed
+          const allRhythmsAllowed = list.every((item) => set.has(item));
+          // TODO: need to check if each rhythm in the list is in the set
+          // TODO: need to check if the number of rhythms is too high for beats
+          // TODO: need to index into lengthIndex
+          if (allRhythmsAllowed) {
+            for (let i = words[word].length; i <= beats; i++) {
+              this.lengthIndex[i].add(word);
+              this.possibleWords.add(word);
+            }
           }
         }
       }
@@ -63,7 +84,7 @@ class WordSet {
   resetLengthIndex() {
     const dictionary = {};
     for (let i = this.beats; i > 0; i--) {
-        dictionary[i] = [];
+      dictionary[i] = new Set();
     }
     this.lengthIndex = dictionary;
   }
@@ -75,15 +96,38 @@ class WordSet {
      * rhythm.
      */
 
-    let pattern = [];
-    let rhythm = [];
+    let pattern = []; // Surface form of the rhythm, i.e. what's displayed
+    let rhythm = []; // Underlying form of rhythm, i.e. what actual rhythms
 
-    for (let i = 0; i < this.beats; i++) {
-      const keys = Object.keys(this.words);
-      const randomWord = keys[Math.floor(Math.random() * keys.length)];
+    // for (let i = 0; i < this.beats; i++) {
+    //   const keys = Object.keys(this.words);
+    //   const randomWord = keys[Math.floor(Math.random() * keys.length)];
+    //   const randomRhythm = this.words[randomWord];
+    //   pattern.push(randomWord);
+    //   rhythm.push(randomRhythm[0]);
+    // }
+
+    let beatsSet = 0;
+
+    while (beatsSet < this.beats) {
+      const beatsLeft = this.beats - beatsSet;
+      const wordsToChooseFrom = this.lengthIndex[beatsLeft];
+      const randomWord = [...wordsToChooseFrom][
+        Math.floor(Math.random() * wordsToChooseFrom.size)
+      ];
       const randomRhythm = this.words[randomWord];
-      pattern.push(randomWord);
-      rhythm.push(randomRhythm);
+
+      pattern.push(...randomWord.split("-"));
+      // If the word takes up multiple beats, will add them each to the pattern
+      rhythm.push(...randomRhythm);
+      // Will add all elements in the underlying rhythm of the word to the 
+      // underlying rhythm of the pattern.
+
+      beatsSet += randomRhythm.length;
+
+      if (beatsSet > this.beats) {
+        throw Error("Indexing problem. Rhythm overflowed.");
+      }
     }
 
     return [pattern, rhythm];

@@ -20,7 +20,11 @@ import { IoIosMusicalNote as TaIcon } from "react-icons/io";
 import { FaDeleteLeft as DeleteIcon } from "react-icons/fa6";
 import { FaCheckCircle as CheckIcon } from "react-icons/fa";
 import { IoPlaySkipForward as SkipIcon } from "react-icons/io5";
-import { IoMdRefresh as ClearIcon } from "react-icons/io";
+import { FaTrashCan as ClearIcon } from "react-icons/fa6";
+
+// import QuarterNote from "../assets/images/rhythm_game/notes/quarter.svg";
+import Qu1Icon from "./CustomIcons/Qu1Icon";
+import Ei2Icon from "./CustomIcons/Ei2Icon";
 
 /* DATA */
 import DefaultNoteSet from "/src/assets/decks/default.json";
@@ -99,20 +103,32 @@ function RhythmGame() {
     TU: Symbol("tu"),
   });
 
-  const taIcon = TaIcon();
-  const titiIcon = TitiIcon();
+  //   const taIcon = TaIcon();
+  const taIcon = Qu1Icon();
+//   const titiIcon = TitiIcon();
+  const titiIcon = Ei2Icon();
 
   const rhythmDisplay = {
     ei_2: titiIcon,
     qu_1: taIcon,
   };
 
+  const rhythmName = {
+    ei_2: "titi",
+    qu_1: "ta",
+  };
+
   return (
     <div className="rhythm-game">
       <h1>Juego De Ritmo - Rhythm Game</h1>
       <h2>Imita el Ritmo - Imitate the Rhythm</h2>
-      <p>{promptSurface.join("-")}</p>
-      <NoteField spaces={beats} userInput={answer} toDisplay={rhythmDisplay} />
+      <p className="prompt-text">{promptSurface.join("-")}</p>
+      <NoteField
+        spaces={beats}
+        userInput={answer}
+        toDisplay={rhythmDisplay}
+        toLabel={rhythmName}
+      />
       <br />
       <div className="game-btn-row">
         {/* <div className="btn-group"> */}
@@ -166,7 +182,6 @@ function RhythmGame() {
 
 export default RhythmGame;
 
-
 /**
  * Main TODO:
  *  Get audio working
@@ -175,4 +190,8 @@ export default RhythmGame;
  *  Change styles
  *  Add correct animation
  *  Add handling for multi beat words like parajo
+ *  Add settings modal, at least be able to switch decks and number of spaces
+ *  Add animals_complex, where all animals can be together, or at mix setting
+ *  Have the keyboard make sounds
+ *  
  */

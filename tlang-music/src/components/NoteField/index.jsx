@@ -1,11 +1,15 @@
 import { motion } from "motion/react";
 import NoteCell from "./NoteCell";
 
-const NoteField = ({ children, spaces, userInput, toDisplay }) => {
+const NoteField = ({ children, spaces, userInput, toDisplay, toLabel }) => {
   return (
     <div className="note-field">
       {Array.from({ length: spaces }).map((_, index) => (
-        <NoteCell note={toDisplay[userInput[index]]} key={index} />
+        <NoteCell
+          note={toDisplay[userInput[index]]}
+          label={toLabel[userInput[index]]}
+          key={index}
+        />
       ))}
     </div>
   );
