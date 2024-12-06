@@ -8,6 +8,8 @@ import NoteDeck from "../models/NoteDeck";
 /* COMPONENTS */
 import GameButton from "./GameButton";
 import NoteField from "./NoteField";
+import PromptField from "./PromptField";
+import RhythmButtonSet from "./RhythmButtonSet";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // TODO: Doesn't work right now because bootstrap CSS isn't imported...
 // But do I want it?
@@ -43,9 +45,11 @@ function RhythmGame() {
 
   const [answer, setAnswer] = useState([]);
 
+  const [round, setRound] = useState([]);
+
   const beats = 4;
 
-  const noteDeck = NoteDeck.fromJSON(AnimalNoteSet, beats);
+  const noteDeck = NoteDeck.fromJSON(AnimalNoteSet, beats, new Set(["qu_1", "ei_2"]));
 
   const addToAnswer = (item) => {
     if (answer.length < beats) {
@@ -94,14 +98,7 @@ function RhythmGame() {
     }
   };
 
-  const values = Object.freeze({
-    TA: Symbol("ta"),
-    TITI: Symbol("titi"),
-    TIRITIRI: Symbol("tiri-tiri"),
-    TITIRI: Symbol("ti-tiri"),
-    TIRITI: Symbol("tiri-ti"),
-    TU: Symbol("tu"),
-  });
+  const allowedRhythms = ["ei_2", "qu_1"]
 
   //   const taIcon = TaIcon();
   const taIcon = Qu1Icon();
@@ -122,14 +119,18 @@ function RhythmGame() {
     <div className="rhythm-game">
       <h1>Juego De Ritmo - Rhythm Game</h1>
       <h2>Imita el Ritmo - Imitate the Rhythm</h2>
-      <p className="prompt-text">{promptSurface.join("-")}</p>
+      {/* <p className="prompt-text">{promptSurface.join("-")}</p> */}
+      <PromptField
+        prompt={promptSurface}
+        key={promptSurface.join()}
+      />
       <NoteField
         spaces={beats}
         userInput={answer}
         toDisplay={rhythmDisplay}
         toLabel={rhythmName}
       />
-      <br />
+      {/* <br /> */}
       <div className="game-btn-row">
         {/* <div className="btn-group"> */}
         <GameButton
@@ -148,6 +149,10 @@ function RhythmGame() {
           {/* {titiIcon} */}
           TITI
         </GameButton>
+
+        <RhythmButtonSet allowedRhythms={allowedRhythms} rhythmToSurface={rhythmName} addToAnswerFun={addToAnswer}>
+
+        </RhythmButtonSet>
         {/* </div> */}
         <GameButton
           className="delete"

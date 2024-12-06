@@ -11,6 +11,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --roundness: 5px;
 }
 
 a {
@@ -91,22 +93,62 @@ button:focus-visible {
   font-size: 30px;
 }
 
+.prompt-field {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.prompt-cell {
+  font-size: 30px;
+  padding: 8px 15px;
+  margin: .83em 0px;
+  border-radius: var(--roundness);
+  background-color: rgb(255, 180, 180);
+}
+
+.prompt-cell.red {
+  background-color: rgb(255, 180, 180);
+}
+
+.prompt-cell.orange {
+  background-color: rgb(255, 224, 184);
+}
+
+.prompt-cell.yellow {
+  background-color: rgb(255, 255, 184);
+}
+
+.prompt-cell.green {
+  background-color: rgb(167, 255, 179);
+}
+
+.prompt-cell.blue {
+  background-color: rgb(167, 224, 255);
+}
+
+.prompt-cell.purple {
+  background-color: rgb(215, 167, 255);
+}
+
 .note-field {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
   align-content: center;
   justify-content: center;
+  margin: .83em 0px;
 }
 
 .note-cell {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
   background-color: rgb(234, 250, 255);
-  border-radius: 3px;
+  border-radius: var(--roundness);
   justify-content: center;
   align-items: center;
   font-size: 40px;

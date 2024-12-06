@@ -26,10 +26,10 @@ class WordSet {
     this.possibleWords = new Set([]);
 
     this.resetLengthIndex();
+    this.words = words;
 
     if (allowedRhythms.size === 0) {
       // If allowedRhythms is empty, all
-      this.words = words;
       for (let word in words) {
         if (words.hasOwnProperty(word)) {
           // TODO: need to check if number of rhythms is too high for beats
@@ -54,7 +54,9 @@ class WordSet {
           let rhythms = words[word];
           // All of the rhythms in the word are allowed rhythms, i.e. every
           // kind of rhythm in the sequence of rhythms of the word we allowed
-          const allRhythmsAllowed = list.every((item) => set.has(item));
+          const allRhythmsAllowed = rhythms.every((item) =>
+            allowedRhythms.has(item)
+          );
           // TODO: need to check if each rhythm in the list is in the set
           // TODO: need to check if the number of rhythms is too high for beats
           // TODO: need to index into lengthIndex
@@ -120,7 +122,7 @@ class WordSet {
       pattern.push(...randomWord.split("-"));
       // If the word takes up multiple beats, will add them each to the pattern
       rhythm.push(...randomRhythm);
-      // Will add all elements in the underlying rhythm of the word to the 
+      // Will add all elements in the underlying rhythm of the word to the
       // underlying rhythm of the pattern.
 
       beatsSet += randomRhythm.length;
