@@ -1,5 +1,5 @@
 /* LIBRARIES */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 
 /* DATACLASSES */
@@ -23,6 +23,7 @@ import { FaDeleteLeft as DeleteIcon } from "react-icons/fa6";
 import { FaCheckCircle as CheckIcon } from "react-icons/fa";
 import { IoPlaySkipForward as SkipIcon } from "react-icons/io5";
 import { FaTrashCan as ClearIcon } from "react-icons/fa6";
+import { FaVolumeHigh as SoundIcon } from "react-icons/fa6";
 
 // import QuarterNote from "../assets/images/rhythm_game/notes/quarter.svg";
 import Qu1Icon from "./CustomIcons/Qu1Icon";
@@ -31,6 +32,9 @@ import Ei2Icon from "./CustomIcons/Ei2Icon";
 /* DATA */
 import DefaultNoteSet from "/src/assets/decks/default.json";
 import AnimalNoteSet from "/src/assets/decks/animals_basic.json";
+
+/* UTILS */
+import defaultSoundManager from "../utils/SoundManager";
 
 /** TODO: check if answer full */
 
@@ -49,7 +53,22 @@ function RhythmGame() {
 
   const beats = 4;
 
-  const noteDeck = NoteDeck.fromJSON(AnimalNoteSet, beats, new Set(["qu_1", "ei_2"]));
+  const allowedRhythms = ["ei_2", "qu_1"];
+
+  useEffect(() => {
+    for (const rhythm of allowedRhythms) {
+      defaultSoundManager.loadSound(
+        rhythm,
+        `/src/assets/audio/rhythm_game/${rhythm}_0_80.m4a`
+      );
+    }
+  }, []);
+
+  const noteDeck = NoteDeck.fromJSON(
+    DefaultNoteSet,
+    beats,
+    new Set(["qu_1", "ei_2"])
+  );
 
   const addToAnswer = (item) => {
     if (answer.length < beats) {
@@ -84,6 +103,11 @@ function RhythmGame() {
     setAnswer([]);
   };
 
+  useEffect(() => {
+    defaultSoundManager.playSequenceTimed(promptRhythm, 750);
+    // defaultSoundManager.playSequence(promptRhythm);
+  }, promptRhythm);
+
   const arraysEqual = (arr1, arr2) => {
     if (arr1.length !== arr2.length) return false;
     return arr1.every((value, index) => value === arr2[index]);
@@ -98,11 +122,9 @@ function RhythmGame() {
     }
   };
 
-  const allowedRhythms = ["ei_2", "qu_1"]
-
   //   const taIcon = TaIcon();
   const taIcon = Qu1Icon();
-//   const titiIcon = TitiIcon();
+  //   const titiIcon = TitiIcon();
   const titiIcon = Ei2Icon();
 
   const rhythmDisplay = {
@@ -120,10 +142,7 @@ function RhythmGame() {
       <h1>Juego De Ritmo - Rhythm Game</h1>
       <h2>Imita el Ritmo - Imitate the Rhythm</h2>
       {/* <p className="prompt-text">{promptSurface.join("-")}</p> */}
-      <PromptField
-        prompt={promptSurface}
-        key={promptSurface.join()}
-      />
+      <PromptField prompt={promptSurface} key={promptSurface.join()} />
       <NoteField
         spaces={beats}
         userInput={answer}
@@ -150,9 +169,11 @@ function RhythmGame() {
           TITI
         </GameButton>
 
-        <RhythmButtonSet allowedRhythms={allowedRhythms} rhythmToSurface={rhythmName} addToAnswerFun={addToAnswer}>
-
-        </RhythmButtonSet>
+        <RhythmButtonSet
+          allowedRhythms={allowedRhythms}
+          rhythmToSurface={rhythmName}
+          addToAnswerFun={addToAnswer}
+        ></RhythmButtonSet>
         {/* </div> */}
         <GameButton
           className="delete"
@@ -174,6 +195,9 @@ function RhythmGame() {
       <div className="game-btn-row">
         <GameButton onClick={clearAnswer}>
           <ClearIcon />
+        </GameButton>
+        <GameButton onClick={() => {}}>
+          <SoundIcon />
         </GameButton>
         <GameButton onClick={skipPrompt}>
           <SkipIcon />
@@ -198,5 +222,5 @@ export default RhythmGame;
  *  Add settings modal, at least be able to switch decks and number of spaces
  *  Add animals_complex, where all animals can be together, or at mix setting
  *  Have the keyboard make sounds
- *  
+ *
  */
