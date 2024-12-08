@@ -1,5 +1,5 @@
 /* LIBRARIES */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
 /* DATACLASSES */
@@ -53,10 +53,14 @@ function RhythmGame() {
 
   const beats = 4;
 
+  const bpm = 80;
+
+  const msPerBeat = (60 / bpm) * 1000;
+
   const allowedRhythms = ["qu_1", "ei_2"];
 
   const noteDeck = NoteDeck.fromJSON(
-    DefaultNoteSet,
+    AnimalNoteSet,
     beats,
     new Set(["qu_1", "ei_2"])
   );
@@ -64,7 +68,7 @@ function RhythmGame() {
   const addToAnswer = (item) => {
     if (answer.length < beats) {
       setAnswer(answer.concat([item]));
-      defaultSoundManager.playSound(item);
+    //   defaultSoundManager.playSound(item);
     }
   };
 
@@ -105,7 +109,7 @@ function RhythmGame() {
   }, []);
 
   useEffect(() => {
-    defaultSoundManager.playSequenceTimed(promptRhythm, 750);
+    defaultSoundManager.playSequenceTimed(promptRhythm, msPerBeat);
     // defaultSoundManager.playSequence(promptRhythm);
   }, promptRhythm);
 
@@ -138,6 +142,13 @@ function RhythmGame() {
     qu_1: "ta",
   };
 
+  const userInputRef = useRef();
+
+  const testAnswer = () => {
+    defaultSoundManager.playSequenceTimed(promptRhythm, msPerBeat);
+    userInputRef.current.iterateThroughChildren(msPerBeat);
+  };
+
   return (
     <div className="rhythm-game">
       <h1>Juego De Ritmo - Rhythm Game</h1>
@@ -150,6 +161,7 @@ function RhythmGame() {
           userInput={answer}
           toDisplay={rhythmDisplay}
           toLabel={rhythmName}
+          ref={userInputRef}
         />
         {/* <div className="labeled-item inline-submit">
           <motion.button
@@ -193,7 +205,11 @@ function RhythmGame() {
         <GameButton onClick={clearAnswer}>
           <ClearIcon />
         </GameButton>
-        <GameButton onClick={() => {}}>
+        <GameButton
+          onClick={() => {
+            testAnswer();
+          }}
+        >
           <SoundIcon />
         </GameButton>
         <GameButton onClick={skipPrompt}>
