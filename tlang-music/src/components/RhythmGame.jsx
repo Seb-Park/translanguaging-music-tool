@@ -60,7 +60,7 @@ function RhythmGame() {
   const allowedRhythms = ["qu_1", "ei_2"];
 
   const noteDeck = NoteDeck.fromJSON(
-    DefaultNoteSet,
+    AnimalNoteSet,
     beats,
     new Set(["qu_1", "ei_2"])
   );

@@ -7,6 +7,10 @@
         "cat": ["qu_1"],
         "gato": ["ei_2"]
       },
+      "clip_paths": {
+        "cat": ["/src/assets/audio/rhythm_game/animals_basic/gato_cat/cat"],
+        "gato": ["/src/assets/audio/rhythm_game/animals_basic/gato_cat/gato"]
+      },
       "possible_patterns": []
     },
     {
