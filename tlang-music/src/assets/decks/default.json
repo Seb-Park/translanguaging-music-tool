@@ -7,6 +7,10 @@
         "ta": ["qu_1"],
         "titi": ["ei_2"]
       },
+      "clip_paths": {
+        "ta": ["/src/assets/audio/rhythm_game/default/qu_1"],
+        "titi": ["/src/assets/audio/rhythm_game/default/ei_2"]
+      },
       "possible_patterns": []
     }
   ]

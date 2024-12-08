@@ -1,11 +1,21 @@
 import { memo } from "react";
-import React from 'react';
+import React from "react";
 import PromptCell from "./PromptCell";
 
 const PromptField = memo(({ children, prompt }) => {
   let colors = ["red", "orange", "yellow", "green", "blue", "purple"];
   let wordToColor = {};
-  prompt.forEach((word) => {
+  let promptWithSplits = [];
+  for (const word of prompt) {
+    const wordSplitIntoParts = [...word.split("-")];
+    // For all of the parts of the word that aren't the last, then add
+    // a dash after them
+    for (let i = 0; i < wordSplitIntoParts.length - 1; i++) {
+      promptWithSplits.push(wordSplitIntoParts[i] + "-");
+    }
+    promptWithSplits.push(wordSplitIntoParts[wordSplitIntoParts.length - 1]);
+  }
+  promptWithSplits.forEach((word) => {
     if (!wordToColor.hasOwnProperty(word)) {
       const randomIndex = Math.floor(Math.random() * colors.length);
       const randomColor = colors[randomIndex];
@@ -18,8 +28,13 @@ const PromptField = memo(({ children, prompt }) => {
   });
   return (
     <div className={"prompt-field"}>
-      {prompt.map((word, index) => (
-        <PromptCell word={word} label={""} key={index} color={wordToColor[word]} />
+      {promptWithSplits.map((word, index) => (
+        <PromptCell
+          word={word}
+          label={""}
+          key={index}
+          color={wordToColor[word]}
+        />
       ))}
     </div>
   );

@@ -60,7 +60,7 @@ function RhythmGame() {
   const allowedRhythms = ["qu_1", "ei_2"];
 
   const noteDeck = NoteDeck.fromJSON(
-    AnimalNoteSet,
+    DefaultNoteSet,
     beats,
     new Set(["qu_1", "ei_2"])
   );
@@ -68,7 +68,7 @@ function RhythmGame() {
   const addToAnswer = (item) => {
     if (answer.length < beats) {
       setAnswer(answer.concat([item]));
-    //   defaultSoundManager.playSound(item);
+      //   defaultSoundManager.playSound(item);
     }
   };
 
@@ -84,34 +84,63 @@ function RhythmGame() {
     const generatedPrompt = noteDeck.generateQuestion(beats);
     const surface = generatedPrompt[0];
     const rhythm = generatedPrompt[1];
-    return [surface, rhythm];
+    const beatsOccupied = generatedPrompt[2];
+    const spacesFromEnd = generatedPrompt[3];
+    return [surface, rhythm, beatsOccupied, spacesFromEnd];
   };
 
   const newPrompt = getNewPrompt();
 
   const [promptSurface, setPromptSurface] = useState(newPrompt[0]);
-  const [promptRhythm, setPromptRhythm] = useState(newPrompt[1]);
+  const promptRhythm = useRef(newPrompt[1]);
+  const promptBeatsOccupied = useRef(newPrompt[2]);
+  const promptSpacesFromEnd = useRef(newPrompt[3]);
+  //   const [promptRhythm, setPromptRhythm] = useState(newPrompt[1]);
 
   const skipPrompt = () => {
     const newPrompt = getNewPrompt();
     setPromptSurface(newPrompt[0]);
-    setPromptRhythm(newPrompt[1]);
+    promptRhythm.current = newPrompt[1];
+    // setPromptRhythm(newPrompt[1]);
+    promptBeatsOccupied.current = newPrompt[2];
+    promptSpacesFromEnd.current = newPrompt[3];
     setAnswer([]);
   };
 
   useEffect(() => {
     for (const rhythm of allowedRhythms) {
       defaultSoundManager.loadSound(
-        rhythm,
-        `/src/assets/audio/rhythm_game/${rhythm}_0_80.m4a`
+        `${rhythm}_0`,
+        `/src/assets/audio/rhythm_game/default/${rhythm}_0_80.m4a`
+      );
+      defaultSoundManager.loadSound(
+        `${rhythm}_1`,
+        `/src/assets/audio/rhythm_game/default/${rhythm}_1_80.m4a`
+      );
+      defaultSoundManager.loadSound(
+        `${rhythm}_2`,
+        `/src/assets/audio/rhythm_game/default/${rhythm}_2_80.m4a`
       );
     }
+    for (const clip in noteDeck.allClipPaths) {
+      if (Object.prototype.hasOwnProperty.call(noteDeck.allClipPaths, clip)) {
+        const clipPath = noteDeck.allClipPaths[clip];
+        defaultSoundManager.loadSound(`${clip}_2`, `${clipPath}_2_80.m4a`); // Clip to play when it's the second to last word
+        defaultSoundManager.loadSound(`${clip}_1`, `${clipPath}_1_80.m4a`); // Clip to play when it's the last word
+        defaultSoundManager.loadSound(`${clip}_0`, `${clipPath}_0_80.m4a`); // Clip to play when it's any other word
+      }
+    }
+    console.log(defaultSoundManager.sounds);
   }, []);
 
   useEffect(() => {
-    defaultSoundManager.playSequenceTimed(promptRhythm, msPerBeat);
+    const sequence = promptSurface.map((word, i) => {
+      const j = promptSpacesFromEnd.current[i];
+      return `${word}_${j < 3 ? j : 0}`;
+    });
+    defaultSoundManager.playSequenceTimed(sequence, msPerBeat);
     // defaultSoundManager.playSequence(promptRhythm);
-  }, promptRhythm);
+  }, promptRhythm.current);
 
   const arraysEqual = (arr1, arr2) => {
     if (arr1.length !== arr2.length) return false;
@@ -119,7 +148,7 @@ function RhythmGame() {
   };
 
   const compareAnswer = () => {
-    if (arraysEqual(promptRhythm, answer)) {
+    if (arraysEqual(promptRhythm.current, answer)) {
       alert("correct!");
       skipPrompt();
     } else {
@@ -145,7 +174,13 @@ function RhythmGame() {
   const userInputRef = useRef();
 
   const testAnswer = () => {
-    defaultSoundManager.playSequenceTimed(promptRhythm, msPerBeat);
+    let seq = answer.map(
+      (r, i) =>
+        `${r}_${
+          answer.length - i < 3 ? `${answer.length - i}` : `0`
+        }`
+    );
+    defaultSoundManager.playSequenceTimed(seq, msPerBeat);
     userInputRef.current.iterateThroughChildren(msPerBeat);
   };
 

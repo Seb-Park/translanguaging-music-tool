@@ -9,6 +9,7 @@ class WordSet {
     name,
     words,
     possiblePatterns,
+    clipPaths,
     beats = 4,
     allowedRhythms = new Set()
   ) {
@@ -17,6 +18,7 @@ class WordSet {
     this.name = name;
     this.beats = beats; // Number of beats in a pattern
     this.allowedRhythms = allowedRhythms;
+    this.clipPaths = clipPaths;
     this.words = {};
     // All the words that could show up
     this.lengthIndex = {}; // Object that goes from integers to a list of words
@@ -100,6 +102,12 @@ class WordSet {
 
     let pattern = []; // Surface form of the rhythm, i.e. what's displayed
     let rhythm = []; // Underlying form of rhythm, i.e. what actual rhythms
+    let beatsOccupied = []; // Number of beats that each word in pattern 
+                            // takes up. e.g. Paja-ro is two
+    let ordinal = []; // Array of integers that determines what position in the
+    // measure the surface form words are, i.e. if they're
+    // 2nd to last or last beat they will have a different
+    // inflection
 
     // for (let i = 0; i < this.beats; i++) {
     //   const keys = Object.keys(this.words);
@@ -119,11 +127,13 @@ class WordSet {
       ];
       const randomRhythm = this.words[randomWord];
 
-      pattern.push(...randomWord.split("-"));
+      //   pattern.push(...randomWord.split("-"));
+      pattern.push(randomWord);
       // If the word takes up multiple beats, will add them each to the pattern
       rhythm.push(...randomRhythm);
       // Will add all elements in the underlying rhythm of the word to the
       // underlying rhythm of the pattern.
+      beatsOccupied.push(randomRhythm.length);
 
       beatsSet += randomRhythm.length;
 
@@ -132,7 +142,19 @@ class WordSet {
       }
     }
 
-    return [pattern, rhythm];
+    ordinal = new Array(pattern.length);
+
+    let spacesFromEnd = 0;
+
+    for (let i = beatsOccupied.length - 1; i > -1; i--) {
+      // Iterating backwards through the surface form of the rhythm, the
+      // number of dashes will determine spacing
+      const numBeats = beatsOccupied[i];
+      spacesFromEnd += numBeats;
+      ordinal[i] = spacesFromEnd;
+    }
+
+    return [pattern, rhythm, beatsOccupied, ordinal];
   }
 }
 
@@ -143,6 +165,7 @@ class NoteDeck {
     this.deckname = deckname;
     this.wordsets = [];
     this.beats = beats;
+    this.allClipPaths = {};
     // The possible word configurations that can come up
     // For example, a question that will generate from a combination of tas
     // and titis vs. a question that could generate from a combination of
@@ -156,9 +179,16 @@ class NoteDeck {
         setOfWords["name"],
         setOfWords["words"],
         setOfWords["possible_patterns"],
+        setOfWords["clip_paths"],
         beats,
         allowedRhythms
       );
+      if ("clip_paths" in setOfWords && setOfWords["clip_paths"]) {
+        res.allClipPaths = Object.assign(
+          res.allClipPaths,
+          setOfWords["clip_paths"]
+        );
+      }
       if (genWordSet.valid) {
         res.wordsets.push(genWordSet);
       }
@@ -168,7 +198,7 @@ class NoteDeck {
 
   generateQuestion() {
     const index = Math.floor(Math.random() * this.wordsets.length);
-    return this.wordsets[index].generatePattern(this.beats);
+    return this.wordsets[index].generatePattern();
   }
 
   setNumberBeats() {}
