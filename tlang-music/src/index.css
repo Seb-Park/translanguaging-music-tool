@@ -13,6 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
 
   --roundness: 5px;
+
+  --note-cell-size: 120px;
 }
 
 a {
@@ -70,7 +72,7 @@ button:focus-visible {
 .game-btn {
   margin: 20px 10px;
   min-height: 60px;
-  min-width: 100px;
+  min-width: var(--note-cell-size);
   align-items: center;
   justify-content: center;
   font-size: 20px;
@@ -139,19 +141,20 @@ button:focus-visible {
   align-content: center;
   justify-content: center;
   margin: .83em 0px;
+  align-self: center;
 }
 
 .note-cell {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 100px;
-  height: 100px;
+  width: var(--note-cell-size);
+  height: var(--note-cell-size);
   background-color: rgb(234, 250, 255);
   border-radius: var(--roundness);
   justify-content: center;
   align-items: center;
-  font-size: 40px;
+  font-size: 60px;
 }
 
 .note-cell.filled {
@@ -166,8 +169,37 @@ button:focus-visible {
   min-height: 1em;
 }
 
+.row-checkmark {
+  display: grid;
+  grid-template-columns: auto auto;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  /* grid-template-columns: "auto auto"; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  /* gap: 10px; */
+}
+
+.inline-submit {
+  position: absolute;
+  right: calc(var(--note-cell-size) / 3);
+}
+
+.submit-small {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: calc(var(--note-cell-size) / 3);
+  height: calc(var(--note-cell-size) / 1);
+  align-content: center;
+}
+
 .labeled-item {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (prefers-color-scheme: light) {

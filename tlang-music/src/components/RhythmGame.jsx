@@ -53,16 +53,7 @@ function RhythmGame() {
 
   const beats = 4;
 
-  const allowedRhythms = ["ei_2", "qu_1"];
-
-  useEffect(() => {
-    for (const rhythm of allowedRhythms) {
-      defaultSoundManager.loadSound(
-        rhythm,
-        `/src/assets/audio/rhythm_game/${rhythm}_0_80.m4a`
-      );
-    }
-  }, []);
+  const allowedRhythms = ["qu_1", "ei_2"];
 
   const noteDeck = NoteDeck.fromJSON(
     DefaultNoteSet,
@@ -73,6 +64,7 @@ function RhythmGame() {
   const addToAnswer = (item) => {
     if (answer.length < beats) {
       setAnswer(answer.concat([item]));
+      defaultSoundManager.playSound(item);
     }
   };
 
@@ -102,6 +94,15 @@ function RhythmGame() {
     setPromptRhythm(newPrompt[1]);
     setAnswer([]);
   };
+
+  useEffect(() => {
+    for (const rhythm of allowedRhythms) {
+      defaultSoundManager.loadSound(
+        rhythm,
+        `/src/assets/audio/rhythm_game/${rhythm}_0_80.m4a`
+      );
+    }
+  }, []);
 
   useEffect(() => {
     defaultSoundManager.playSequenceTimed(promptRhythm, 750);
@@ -143,32 +144,28 @@ function RhythmGame() {
       <h2>Imita el Ritmo - Imitate the Rhythm</h2>
       {/* <p className="prompt-text">{promptSurface.join("-")}</p> */}
       <PromptField prompt={promptSurface} key={promptSurface.join()} />
-      <NoteField
-        spaces={beats}
-        userInput={answer}
-        toDisplay={rhythmDisplay}
-        toLabel={rhythmName}
-      />
+      <div className="row-checkmark">
+        <NoteField
+          spaces={beats}
+          userInput={answer}
+          toDisplay={rhythmDisplay}
+          toLabel={rhythmName}
+        />
+        {/* <div className="labeled-item inline-submit">
+          <motion.button
+            whileTap={{ scale: 0.8 }}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            type="button"
+            className="submit-small"
+          >
+            <CheckIcon />
+          </motion.button>
+          <label className={"note-cell-label"}><span className="placeholder">&nbsp;</span></label>
+        </div> */}
+      </div>
       {/* <br /> */}
       <div className="game-btn-row">
-        {/* <div className="btn-group"> */}
-        <GameButton
-          onClick={() => {
-            addToAnswer("qu_1");
-          }}
-        >
-          {/* {taIcon} */}
-          TA
-        </GameButton>
-        <GameButton
-          onClick={() => {
-            addToAnswer("ei_2");
-          }}
-        >
-          {/* {titiIcon} */}
-          TITI
-        </GameButton>
-
         <RhythmButtonSet
           allowedRhythms={allowedRhythms}
           rhythmToSurface={rhythmName}
@@ -216,11 +213,11 @@ export default RhythmGame;
  *  Get audio working
  *  Get images working
  *  Get labeled buttons working
+ *      * Replace text with dash symbols
  *  Change styles
  *  Add correct animation
- *  Add handling for multi beat words like parajo
  *  Add settings modal, at least be able to switch decks and number of spaces
  *  Add animals_complex, where all animals can be together, or at mix setting
  *  Have the keyboard make sounds
- *
+ *  Add playback button
  */

@@ -1,4 +1,5 @@
 import GameButton from "./GameButton";
+import PromptCell from "./PromptField/PromptCell";
 
 const RhythmButtonSet = ({
   allowedRhythms,
@@ -7,16 +8,17 @@ const RhythmButtonSet = ({
 }) => {
   return (
     <>
-      {allowedRhythms.map((item, index) => {
+      {allowedRhythms.map((rhythm, index) => (
         <GameButton
           key={index}
           onClick={() => {
-            addToAnswerFun(rhythmToSurface[item]);
+            addToAnswerFun(rhythm);
           }}
         >
-          rhythmToSurface[item].toUpperCase()
-        </GameButton>;
-      })}
+          {/* {taIcon} */}
+          {rhythmToSurface[rhythm].toUpperCase()}
+        </GameButton>
+      ))}
     </>
   );
 };

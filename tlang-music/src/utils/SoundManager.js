@@ -71,8 +71,6 @@ class SoundManager {
       for (let i = 0; i < clips.length; i++) {
         const clipName = clips[i];
         const time = times;
-        const sound = this.sounds[clipName];
-        console.log(clipName, i);
 
         this.playSound(clipName);
         await this.wait(time);
