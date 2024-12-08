@@ -93,8 +93,8 @@
     {
       "name": "elefante_elephant",
       "words": {
-        "elefante": ["ei_2", "ei_2"],
-        "elephant": ["ei_2", "qu_1"]
+        "ele-fante": ["ei_2", "ei_2"],
+        "ele-phant": ["ei_2", "qu_1"]
       },
       "possible_patterns": []
     },
