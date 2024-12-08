@@ -89,6 +89,22 @@
         "monkey": ["ei_2"]
       },
       "possible_patterns": []
+    },
+    {
+      "name": "elefante_elephant",
+      "words": {
+        "elefante": ["ei_2", "ei_2"],
+        "elephant": ["ei_2", "qu_1"]
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "pato_duck",
+      "words": {
+        "duck": ["qu_1"],
+        "pato": ["ei_2"]
+      },
+      "possible_patterns": []
     }
   ]
 }

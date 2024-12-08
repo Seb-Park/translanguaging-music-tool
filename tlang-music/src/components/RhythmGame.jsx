@@ -236,4 +236,5 @@ export default RhythmGame;
  *  Add animals_complex, where all animals can be together, or at mix setting
  *  Have the keyboard make sounds
  *  Add playback button
+ *  Ask what sound the animal makes
  */
