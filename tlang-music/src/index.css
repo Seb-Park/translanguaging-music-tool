@@ -14,7 +14,7 @@
 
   --roundness: 5px;
 
-  --note-cell-size: 120px;
+  --note-cell-size: 150px;
 }
 
 a {
@@ -103,11 +103,14 @@ button:focus-visible {
 }
 
 .prompt-cell {
-  font-size: 30px;
-  padding: 8px 15px;
+  font-size: 40px;
+  /* font-size: clamp(0.5rem, 5vw, 2rem);  */
+  /* font-size: auto; */
+  /* padding: 8px 15px; */
   margin: .83em 0px;
   border-radius: var(--roundness);
   background-color: rgb(255, 180, 180);
+  width: var(--note-cell-size);
 }
 
 .prompt-cell.red {
