@@ -58,9 +58,9 @@ class SoundManager {
       // Doesn't work.
       this.playing[name] = true;
       await this.wait(time);
-    //   await this.wait(time + (Date.now() - startTime) * 10);
+      //   await this.wait(time + (Date.now() - startTime) * 10);
       await this.sounds[name].pause();
-    //   console.log(this.sounds[name].currentTime);
+      //   console.log(this.sounds[name].currentTime);
       this.sounds[name].currentTime = 0;
       this.playing[name] = false;
     }

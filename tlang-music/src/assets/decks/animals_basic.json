@@ -43,6 +43,10 @@
         "bear": ["qu_1"],
         "oso": ["ei_2"]
       },
+      "clip_paths": {
+        "bear": ["/src/assets/audio/rhythm_game/animals_basic/oso_bear/bear"],
+        "oso": ["/src/assets/audio/rhythm_game/animals_basic/oso_bear/oso"]
+      },
       "possible_patterns": []
     },
     {
@@ -50,6 +54,10 @@
       "words": {
         "pez": ["qu_1"],
         "fish": ["qu_1"]
+      },
+      "clip_paths": {
+        "pez": ["/src/assets/audio/rhythm_game/animals_basic/pez_fish/pez"],
+        "fish": ["/src/assets/audio/rhythm_game/animals_basic/pez_fish/fish"]
       },
       "possible_patterns": []
     },
@@ -59,6 +67,10 @@
         "gallo": ["ei_2"],
         "rooster": ["ei_2"]
       },
+      "clip_paths": {
+        "gallo": ["/src/assets/audio/rhythm_game/animals_basic/gallo_rooster/gallo"],
+        "rooster": ["/src/assets/audio/rhythm_game/animals_basic/gallo_rooster/rooster"]
+      },
       "possible_patterns": []
     },
     {
@@ -67,6 +79,10 @@
         "pavo": ["ei_2"],
         "turkey": ["ei_2"]
       },
+      "clip_paths": {
+        "pavo": ["/src/assets/audio/rhythm_game/animals_basic/pavo_turkey/pavo"],
+        "turkey": ["/src/assets/audio/rhythm_game/animals_basic/pavo_turkey/turkey"]
+      },
       "possible_patterns": []
     },
     {
@@ -74,6 +90,10 @@
       "words": {
         "wolf": ["qu_1"],
         "lobo": ["ei_2"]
+      },
+      "clip_paths": {
+        "lobo": ["/src/assets/audio/rhythm_game/animals_basic/lobo_wolf/lobo"],
+        "wolf": ["/src/assets/audio/rhythm_game/animals_basic/lobo_wolf/wolf"]
       },
       "possible_patterns": []
     },
@@ -109,6 +129,10 @@
         "mono": ["ei_2"],
         "monkey": ["ei_2"]
       },
+      "clip_paths": {
+        "mono": ["/src/assets/audio/rhythm_game/animals_basic/mono_monkey/mono"],
+        "monkey": ["/src/assets/audio/rhythm_game/animals_basic/mono_monkey/monkey"]
+      },
       "possible_patterns": []
     },
     {
@@ -117,6 +141,10 @@
         "ele-fante": ["ei_2", "ei_2"],
         "ele-phant": ["ei_2", "qu_1"]
       },
+      "clip_paths": {
+        "ele-fante": ["/src/assets/audio/rhythm_game/animals_basic/elefante_elephant/elefante"],
+        "ele-phant": ["/src/assets/audio/rhythm_game/animals_basic/elefante_elephant/elephant"]
+      },
       "possible_patterns": []
     },
     {
@@ -124,6 +152,10 @@
       "words": {
         "duck": ["qu_1"],
         "pato": ["ei_2"]
+      },
+      "clip_paths": {
+        "pato": ["/src/assets/audio/rhythm_game/animals_basic/pato_duck/pato"],
+        "duck": ["/src/assets/audio/rhythm_game/animals_basic/pato_duck/duck"]
       },
       "possible_patterns": []
     }

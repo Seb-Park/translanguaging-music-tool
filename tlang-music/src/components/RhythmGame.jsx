@@ -250,7 +250,9 @@ function RhythmGame() {
         <GameButton
           className="submit game-input"
           onClick={compareAnswer}
-          disabled={answer.length !== beats || isPromptAnimating}
+          disabled={
+            answer.length !== beats || isAnswerAnimating || isPromptAnimating
+          }
         >
           <CheckIcon />
         </GameButton>
@@ -284,7 +286,6 @@ export default RhythmGame;
 
 /**
  * Main TODO:
- *  Get audio working
  *  Get images working
  *  Get labeled buttons working
  *      * Replace text with dash symbols
@@ -295,4 +296,5 @@ export default RhythmGame;
  *  Have the keyboard make sounds
  *  Add playback button
  *  Ask what sound the animal makes
+ *  Add vaca / cow
  */
