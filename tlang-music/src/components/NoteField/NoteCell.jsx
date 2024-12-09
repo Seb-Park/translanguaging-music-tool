@@ -5,7 +5,6 @@ import { wait } from "../../utils/Wait";
 
 const NoteCell = forwardRef(({ note = "", label = "" }, ref) => {
   const [scope, animate] = useAnimate();
-  const [test, setTest] = useState("");
 
   useImperativeHandle(ref, () => ({
     growBox: async (dur) => {
@@ -30,7 +29,7 @@ const NoteCell = forwardRef(({ note = "", label = "" }, ref) => {
         // ref={motionDivRef}
       >
         {/* {note === '' ? "X" : note} */}
-        {note} {test}
+        {note}
       </motion.div>
       <label className={"note-cell-label"}>
         {label ? (

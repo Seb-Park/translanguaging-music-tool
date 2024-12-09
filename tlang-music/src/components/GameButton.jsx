@@ -15,7 +15,7 @@ const GameButton = ({
       type="button"
       // className={`game-btn btn btn-${color} ${className}`}
       className={`game-btn btn ${className}`}
-      onPointerUp={onClick}
+      onPointerUp={disabled ? () => {} : onClick}
       disabled={disabled}
     >
       {children}

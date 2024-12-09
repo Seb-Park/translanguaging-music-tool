@@ -10,6 +10,7 @@ const RhythmButtonSet = ({
     <>
       {allowedRhythms.map((rhythm, index) => (
         <GameButton
+          className="game-input"
           key={index}
           onClick={() => {
             addToAnswerFun(rhythm);

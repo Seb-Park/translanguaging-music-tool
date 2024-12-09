@@ -24,6 +24,7 @@ import { FaCheckCircle as CheckIcon } from "react-icons/fa";
 import { IoPlaySkipForward as SkipIcon } from "react-icons/io5";
 import { FaTrashCan as ClearIcon } from "react-icons/fa6";
 import { FaVolumeHigh as SoundIcon } from "react-icons/fa6";
+import { FaPlay as PlayPromptIcon } from "react-icons/fa";
 
 // import QuarterNote from "../assets/images/rhythm_game/notes/quarter.svg";
 import Qu1Icon from "./CustomIcons/Qu1Icon";
@@ -50,6 +51,10 @@ function RhythmGame() {
   const [answer, setAnswer] = useState([]);
 
   const [round, setRound] = useState([]);
+
+  const [isPromptAnimating, setIsPromptAnimating] = useState(false);
+
+  const [isAnswerAnimating, setIsAnswerAnimating] = useState(false);
 
   const beats = 4;
 
@@ -104,6 +109,8 @@ function RhythmGame() {
     // setPromptRhythm(newPrompt[1]);
     promptBeatsOccupied.current = newPrompt[2];
     promptSpacesFromEnd.current = newPrompt[3];
+    setIsAnswerAnimating(false);
+    setIsPromptAnimating(false);
     setAnswer([]);
   };
 
@@ -133,12 +140,20 @@ function RhythmGame() {
     console.log(defaultSoundManager.sounds);
   }, []);
 
-  useEffect(() => {
+  const playPrompt = async () => {
+    setIsPromptAnimating(true);
     const sequence = promptSurface.map((word, i) => {
       const j = promptSpacesFromEnd.current[i];
       return `${word}_${j < 3 ? j : 0}`;
     });
-    defaultSoundManager.playSequenceTimed(sequence, msPerBeat);
+    const clipTimes = promptBeatsOccupied.current.map((n) => n * msPerBeat);
+    defaultSoundManager.playSequenceTimed(sequence, clipTimes);
+    await promptRef.current.iterateThroughChildren(msPerBeat);
+    setIsPromptAnimating(false);
+  };
+
+  useEffect(() => {
+    playPrompt();
     // defaultSoundManager.playSequence(promptRhythm);
   }, promptRhythm.current);
 
@@ -171,17 +186,17 @@ function RhythmGame() {
     qu_1: "ta",
   };
 
+  const promptRef = useRef();
   const userInputRef = useRef();
 
-  const testAnswer = () => {
+  const testAnswer = async () => {
     let seq = answer.map(
-      (r, i) =>
-        `${r}_${
-          answer.length - i < 3 ? `${answer.length - i}` : `0`
-        }`
+      (r, i) => `${r}_${answer.length - i < 3 ? `${answer.length - i}` : `0`}`
     );
+    setIsAnswerAnimating(true);
     defaultSoundManager.playSequenceTimed(seq, msPerBeat);
-    userInputRef.current.iterateThroughChildren(msPerBeat);
+    await userInputRef.current.iterateThroughChildren(msPerBeat);
+    setIsAnswerAnimating(false);
   };
 
   return (
@@ -189,7 +204,13 @@ function RhythmGame() {
       <h1>Juego De Ritmo - Rhythm Game</h1>
       <h2>Imita el Ritmo - Imitate the Rhythm</h2>
       {/* <p className="prompt-text">{promptSurface.join("-")}</p> */}
-      <PromptField prompt={promptSurface} key={promptSurface.join()} />
+      <PromptField
+        prompt={promptSurface}
+        onClickPlay={playPrompt}
+        key={promptSurface.join()}
+        ref={promptRef}
+        isPlayingAnimation={isAnswerAnimating || isPromptAnimating}
+      />
       <div className="row-checkmark">
         <NoteField
           spaces={beats}
@@ -220,16 +241,16 @@ function RhythmGame() {
         ></RhythmButtonSet>
         {/* </div> */}
         <GameButton
-          className="delete"
+          className="delete game-input"
           onClick={deleteFromAnswer}
           disabled={answer.length === 0}
         >
           <DeleteIcon />
         </GameButton>
         <GameButton
-          className="submit"
+          className="submit game-input"
           onClick={compareAnswer}
-          disabled={answer.length !== beats}
+          disabled={answer.length !== beats || isPromptAnimating}
         >
           <CheckIcon />
         </GameButton>
@@ -237,17 +258,19 @@ function RhythmGame() {
       {/* <br />
       <br /> */}
       <div className="game-btn-row">
-        <GameButton onClick={clearAnswer}>
+        <GameButton className="game-input" onClick={clearAnswer}>
           <ClearIcon />
         </GameButton>
         <GameButton
+          className="game-input"
           onClick={() => {
             testAnswer();
           }}
+          disabled={isAnswerAnimating || isPromptAnimating}
         >
           <SoundIcon />
         </GameButton>
-        <GameButton onClick={skipPrompt}>
+        <GameButton className="game-input" onClick={skipPrompt}>
           <SkipIcon />
         </GameButton>
       </div>

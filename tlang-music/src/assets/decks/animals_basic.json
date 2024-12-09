@@ -19,6 +19,10 @@
         "dog": ["qu_1"],
         "perro": ["ei_2"]
       },
+      "clip_paths": {
+        "dog": ["/src/assets/audio/rhythm_game/animals_basic/perro_dog/dog"],
+        "perro": ["/src/assets/audio/rhythm_game/animals_basic/perro_dog/perro"]
+      },
       "possible_patterns": []
     },
     {
@@ -26,6 +30,10 @@
       "words": {
         "frog": ["qu_1"],
         "rana": ["ei_2"]
+      },
+      "clip_paths": {
+        "frog": ["/src/assets/audio/rhythm_game/animals_basic/rana_frog/frog"],
+        "rana": ["/src/assets/audio/rhythm_game/animals_basic/rana_frog/rana"]
       },
       "possible_patterns": []
     },
@@ -76,6 +84,11 @@
         "pája-ro": ["ei_2", "qu_1"],
         "paja-rito": ["ei_2", "ei_2"]
       },
+      "clip_paths": {
+        "bird": ["/src/assets/audio/rhythm_game/animals_basic/pajaro_bird/bird"],
+        "pája-ro": ["/src/assets/audio/rhythm_game/animals_basic/pajaro_bird/paja-ro"],
+        "paja-rito": ["/src/assets/audio/rhythm_game/animals_basic/pajaro_bird/paja-rito"]
+      },
       "possible_patterns": []
     },
     {
@@ -83,6 +96,10 @@
       "words": {
         "mari-posa": ["ei_2", "ei_2"],
         "butter-fly": ["ei_2", "qu_1"]
+      },
+      "clip_paths": {
+        "mari-posa": ["/src/assets/audio/rhythm_game/animals_basic/mariposa_butterfly/mariposa"],
+        "butter-fly": ["/src/assets/audio/rhythm_game/animals_basic/mariposa_butterfly/butterfly"]
       },
       "possible_patterns": []
     },

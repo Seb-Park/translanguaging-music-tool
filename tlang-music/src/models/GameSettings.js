@@ -4,6 +4,6 @@ class RhythmGameSettings {
         this.allowRhythms = [];
         this.levelOfDifficulty;
         this.autoplay = true;
-        // this.
+        this.showConfetti = true;
     }
 }

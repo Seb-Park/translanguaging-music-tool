@@ -15,6 +15,8 @@
   --roundness: 5px;
 
   --note-cell-size: 150px;
+
+  --horizontal-gap: 20px;
 }
 
 a {
@@ -72,13 +74,16 @@ button:focus-visible {
 .game-btn {
   margin: 20px 10px;
   min-height: 60px;
-  min-width: var(--note-cell-size);
   align-items: center;
   justify-content: center;
   font-size: 20px;
   /* TODO: Make this scalable */
   display: flex;
   flex-direction: column;
+}
+
+.game-btn.game-input {
+  min-width: var(--note-cell-size);
 }
 
 .game-btn.submit:enabled {
@@ -97,7 +102,7 @@ button:focus-visible {
 
 .prompt-field {
   display: flex;
-  gap: 20px;
+  gap: var(--horizontal-gap);
   align-items: center;
   justify-content: center;
 }
@@ -137,9 +142,30 @@ button:focus-visible {
   background-color: rgb(215, 167, 255);
 }
 
+.prompt-field-row {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.prompt-play-btn {
+  position: absolute;
+  right: calc(-30px - var(--horizontal-gap));
+  width: 60px;
+}
+
+.prompt-play-btn:enabled {
+  background-color: rgb(69, 161, 69);
+  color: white;
+}
+
 .note-field {
   display: flex;
-  gap: 20px;
+  gap: var(--horizontal-gap);
   align-items: center;
   align-content: center;
   justify-content: center;
