@@ -132,15 +132,15 @@ function RhythmGame() {
     for (const rhythm of allowedRhythms) {
       defaultSoundManager.loadSound(
         `${rhythm}_0`,
-        `/src/assets/audio/rhythm_game/default/${rhythm}_0_80.m4a`
+        `/assets/audio/rhythm_game/default/${rhythm}_0_80.m4a`
       );
       defaultSoundManager.loadSound(
         `${rhythm}_1`,
-        `/src/assets/audio/rhythm_game/default/${rhythm}_1_80.m4a`
+        `/assets/audio/rhythm_game/default/${rhythm}_1_80.m4a`
       );
       defaultSoundManager.loadSound(
         `${rhythm}_2`,
-        `/src/assets/audio/rhythm_game/default/${rhythm}_2_80.m4a`
+        `/assets/audio/rhythm_game/default/${rhythm}_2_80.m4a`
       );
     }
 
@@ -157,11 +157,11 @@ function RhythmGame() {
     // Load in effects
     defaultSoundManager.loadSound(
       "xylo",
-      "/src/assets/audio/rhythm_game/effects/xylophone.m4a"
+      "/assets/audio/rhythm_game/effects/xylophone.m4a"
     );
     defaultSoundManager.loadSound(
       "gliss",
-      "/src/assets/audio/rhythm_game/effects/gliss.wav"
+      "/assets/audio/rhythm_game/effects/gliss.wav"
     );
   }, []);
 
@@ -291,7 +291,7 @@ function RhythmGame() {
         // a resize event listener
       )}
       <h1>Juego De Ritmo - Rhythm Game</h1>
-      <h2>Imita el Ritmo - Imitate the Rhythm</h2>
+      <h2>Imita el Ritmo! - Imitate the Rhythm!</h2>
       {/* <p className="prompt-text">{promptSurface.join("-")}</p> */}
       <PromptField
         prompt={promptSurface}
