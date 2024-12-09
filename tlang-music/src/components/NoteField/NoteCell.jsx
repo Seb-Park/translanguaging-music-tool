@@ -15,6 +15,9 @@ const NoteCell = forwardRef(({ note = "", label = "" }, ref) => {
     setOpacity: (opacity) => {
       animate(scope.current, { opacity: opacity });
     },
+    setColor: (color) => {
+      animate(scope.current, { backgroundColor: color });
+    },
   }));
 
   return (

@@ -41,6 +41,7 @@ import AnimalNoteSet from "/src/assets/decks/animals_basic.json";
 
 /* UTILS */
 import defaultSoundManager from "../utils/SoundManager";
+import { wait } from "../utils/Wait";
 
 /** TODO: check if answer full */
 
@@ -66,6 +67,8 @@ function RhythmGame() {
   const bpm = 80;
 
   const msPerBeat = (60 / bpm) * 1000;
+
+  const waitBetweenQuestions = 3000;
 
   const allowedRhythms = ["qu_1", "ei_2"];
 
@@ -120,6 +123,7 @@ function RhythmGame() {
   };
 
   useEffect(() => {
+    // Load in User Input Sounds, the tas and titis
     for (const rhythm of allowedRhythms) {
       defaultSoundManager.loadSound(
         `${rhythm}_0`,
@@ -134,6 +138,8 @@ function RhythmGame() {
         `/src/assets/audio/rhythm_game/default/${rhythm}_2_80.m4a`
       );
     }
+
+    // Load in prompt sounds
     for (const clip in noteDeck.allClipPaths) {
       if (Object.prototype.hasOwnProperty.call(noteDeck.allClipPaths, clip)) {
         const clipPath = noteDeck.allClipPaths[clip];
@@ -142,7 +148,16 @@ function RhythmGame() {
         defaultSoundManager.loadSound(`${clip}_0`, `${clipPath}_0_80.m4a`); // Clip to play when it's any other word
       }
     }
-    console.log(defaultSoundManager.sounds);
+
+    // Load in effects
+    defaultSoundManager.loadSound(
+      "xylo",
+      "/src/assets/audio/rhythm_game/effects/xylophone.m4a"
+    );
+    defaultSoundManager.loadSound(
+      "gliss",
+      "/src/assets/audio/rhythm_game/effects/gliss.wav"
+    );
   }, []);
 
   const playPrompt = async () => {
@@ -176,6 +191,50 @@ function RhythmGame() {
     }
   };
 
+  const submitAnswer = async () => {
+    setIsPromptAnimating(true);
+    setIsAnswerAnimating(true);
+
+    let allCorrect = true;
+
+    const sequence = promptSurface.map((word, i) => {
+      const j = promptSpacesFromEnd.current[i];
+      return `${word}_${j < 3 ? j : 0}`;
+    });
+    const clipTimes = promptBeatsOccupied.current.map((n) => n * msPerBeat);
+    defaultSoundManager.playSequenceTimed(sequence, clipTimes);
+
+    // let seq = answer.map(
+    //   (r, i) => `${r}_${answer.length - i < 3 ? `${answer.length - i}` : `0`}`
+    // );
+    // defaultSoundManager.playSequenceTimed(seq, msPerBeat);
+
+    for (let i = 0; i < beats; i++) {
+      const actual = promptRhythm.current[i];
+      const guess = answer[i];
+      const correct = actual === guess;
+      promptRef.current.growChild(i, msPerBeat);
+      if (correct) {
+        userInputRef.current.growChild(i, msPerBeat);
+        userInputRef.current.setChildColor(i, "#d1ffd7");
+        defaultSoundManager.playSound("xylo");
+      } else {
+        allCorrect = false;
+      }
+      await wait(msPerBeat);
+    }
+    if (allCorrect) {
+      defaultSoundManager.playSound("gliss");
+      await wait(waitBetweenQuestions);
+      skipPrompt();
+    } else {
+      //   alert("incorrect!");
+    }
+
+    setIsPromptAnimating(false);
+    setIsAnswerAnimating(false);
+  };
+
   const taIcon = Qu1Icon();
   const titiIcon = Ei2Icon();
   const taBlockIcon = Qu1BlockIcon();
@@ -195,8 +254,8 @@ function RhythmGame() {
 
   const rhythmToBlock = {
     ei_2: titiHeadlessIcon,
-    qu_1: taHeadlessIcon
-  }
+    qu_1: taHeadlessIcon,
+  };
 
   const promptRef = useRef();
   const userInputRef = useRef();
@@ -261,7 +320,7 @@ function RhythmGame() {
         </GameButton>
         <GameButton
           className="submit game-input"
-          onClick={compareAnswer}
+          onClick={submitAnswer}
           disabled={
             answer.length !== beats || isAnswerAnimating || isPromptAnimating
           }
@@ -284,7 +343,11 @@ function RhythmGame() {
         >
           <SoundIcon />
         </GameButton>
-        <GameButton className="game-input" onClick={skipPrompt}>
+        <GameButton
+          className="game-input"
+          onClick={skipPrompt}
+          disabled={isAnswerAnimating}
+        >
           <SkipIcon />
         </GameButton>
       </div>

@@ -17,6 +17,9 @@ const PromptCell = forwardRef(({ children, word, color = "yellow" }, ref) => {
     setOpacity: (opacity) => {
       animate(scope.current, { opacity: opacity });
     },
+    setColor: (color) => {
+      animate(scope.current, { backgroundColor: color });
+    },
   }));
 
   return (

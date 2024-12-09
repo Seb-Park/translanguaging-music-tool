@@ -58,6 +58,9 @@ const PromptField = memo(
 
     useImperativeHandle(ref, () => ({
       iterateThroughChildren: iterateThroughChildren,
+      growChild: (i, time) => {
+        childrenRefs[i].current.growBox(time);
+      },
       //   isAnimating: isPlayingAnimation, // TODO: alter this state outside
     }));
 

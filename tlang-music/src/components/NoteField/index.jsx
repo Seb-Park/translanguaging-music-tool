@@ -16,16 +16,22 @@ const NoteField = forwardRef(
       //   });
       iterateThroughChildren: async (pause) => {
         for (let i = 0; i < childrenRefs.length; i++) {
-          await childrenRefs[i].current.setOpacity(0.5); 
+          await childrenRefs[i].current.setOpacity(0.5);
         }
         for (let i = 0; i < childrenRefs.length; i++) {
           childrenRefs[i].current.setOpacity(1.0);
-          await childrenRefs[i].current.growBox(pause); 
+          await childrenRefs[i].current.growBox(pause);
           childrenRefs[i].current.setOpacity(0.5);
         }
         for (let i = 0; i < childrenRefs.length; i++) {
-          await childrenRefs[i].current.setOpacity(1.0); 
+          await childrenRefs[i].current.setOpacity(1.0);
         }
+      },
+      setChildColor: (i, color) => {
+        childrenRefs[i].current.setColor(color);
+      },
+      growChild: (i, time) => {
+        childrenRefs[i].current.growBox(time);
       },
     }));
 
