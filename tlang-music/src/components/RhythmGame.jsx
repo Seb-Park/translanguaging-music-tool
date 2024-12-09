@@ -1,6 +1,7 @@
 /* LIBRARIES */
 import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
+import Confetti from "react-confetti";
 
 /* DATACLASSES */
 import NoteDeck from "../models/NoteDeck";
@@ -61,6 +62,10 @@ function RhythmGame() {
   const [isPromptAnimating, setIsPromptAnimating] = useState(false);
 
   const [isAnswerAnimating, setIsAnswerAnimating] = useState(false);
+
+  const [isConfettiFalling, setIsConfettiFalling] = useState(false);
+
+  const [confettiExists, setconfettiExists] = useState(false);
 
   const beats = 4;
 
@@ -225,7 +230,11 @@ function RhythmGame() {
     }
     if (allCorrect) {
       defaultSoundManager.playSound("gliss");
-      await wait(waitBetweenQuestions);
+      setIsConfettiFalling(true);
+      setconfettiExists(true);
+      await wait(waitBetweenQuestions / 2);
+      setIsConfettiFalling(false);
+      await wait(waitBetweenQuestions / 2);
       skipPrompt();
     } else {
       //   alert("incorrect!");
@@ -272,6 +281,15 @@ function RhythmGame() {
 
   return (
     <div className="rhythm-game">
+      {confettiExists && (
+        <Confetti
+          recycle={isConfettiFalling}
+          gravity={0.05}
+          numberOfPieces={700}
+        />
+        // TODO: Make responsive to size by separating out component and adding
+        // a resize event listener
+      )}
       <h1>Juego De Ritmo - Rhythm Game</h1>
       <h2>Imita el Ritmo - Imitate the Rhythm</h2>
       {/* <p className="prompt-text">{promptSurface.join("-")}</p> */}
