@@ -16,8 +16,9 @@ const RhythmButtonSet = ({
             addToAnswerFun(rhythm);
           }}
         >
-          {/* {taIcon} */}
-          {rhythmToSurface[rhythm].toUpperCase()}
+          {typeof rhythmToSurface[rhythm] === "string"
+            ? rhythmToSurface[rhythm].toUpperCase()
+            : rhythmToSurface[rhythm]}
         </GameButton>
       ))}
     </>

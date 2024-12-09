@@ -26,9 +26,12 @@ import { FaTrashCan as ClearIcon } from "react-icons/fa6";
 import { FaVolumeHigh as SoundIcon } from "react-icons/fa6";
 import { FaPlay as PlayPromptIcon } from "react-icons/fa";
 
+/* CUSTOM ICONS */
 // import QuarterNote from "../assets/images/rhythm_game/notes/quarter.svg";
 import Qu1Icon from "./CustomIcons/Qu1Icon";
 import Ei2Icon from "./CustomIcons/Ei2Icon";
+import Qu1BlockIcon from "./CustomIcons/Qu1BlockIcon";
+import Ei2BlockIcon from "./CustomIcons/Ei2BlockIcon";
 
 /* DATA */
 import DefaultNoteSet from "/src/assets/decks/default.json";
@@ -171,10 +174,10 @@ function RhythmGame() {
     }
   };
 
-  //   const taIcon = TaIcon();
   const taIcon = Qu1Icon();
-  //   const titiIcon = TitiIcon();
   const titiIcon = Ei2Icon();
+  const taBlockIcon = Qu1BlockIcon();
+  const titiBlockIcon = Ei2BlockIcon();
 
   const rhythmDisplay = {
     ei_2: titiIcon,
@@ -185,6 +188,11 @@ function RhythmGame() {
     ei_2: "titi",
     qu_1: "ta",
   };
+
+  const rhythmToBlock = {
+    ei_2: titiBlockIcon,
+    qu_1: taBlockIcon
+  }
 
   const promptRef = useRef();
   const userInputRef = useRef();
@@ -236,7 +244,7 @@ function RhythmGame() {
       <div className="game-btn-row">
         <RhythmButtonSet
           allowedRhythms={allowedRhythms}
-          rhythmToSurface={rhythmName}
+          rhythmToSurface={rhythmToBlock}
           addToAnswerFun={addToAnswer}
         ></RhythmButtonSet>
         {/* </div> */}

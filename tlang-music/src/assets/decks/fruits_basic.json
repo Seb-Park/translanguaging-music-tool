@@ -1,0 +1,37 @@
+{
+  "deck_name": "fruits_basic",
+  "question_set": [
+    {
+      "name": "fresa_strawberry",
+      "words": {
+        "fresa": ["ei_2", "ei_2"],
+        "straw-berry": ["qu_1", "ei_2", "ei_2"]
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "pina_pineapple",
+      "words": {
+        "piña": ["ei_2", "ei_2"],
+        "pinea-pple": ["ei_2", "ei_2", "qu_1"]
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "uva_grape",
+      "words": {
+        "uva": ["ei_2", "ei_2"],
+        "grape": ["qu_1"]
+      },
+      "possible_patterns": []
+    },
+    {
+      "name": "aguacate_avocado",
+      "words": {
+        "agua-cate": ["ei_2", "ei_2", "ei_2", "ei_2"],
+        "avo-cado": ["ei_2", "ei_2", "ei_2", "ei_2"]
+      },
+      "possible_patterns": []
+    }
+  ]
+}
