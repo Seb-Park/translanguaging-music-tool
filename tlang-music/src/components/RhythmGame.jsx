@@ -32,6 +32,8 @@ import Qu1Icon from "./CustomIcons/Qu1Icon";
 import Ei2Icon from "./CustomIcons/Ei2Icon";
 import Qu1BlockIcon from "./CustomIcons/Qu1BlockIcon";
 import Ei2BlockIcon from "./CustomIcons/Ei2BlockIcon";
+import Qu1HeadlessIcon from "./CustomIcons/Qu1HeadlessIcon";
+import Ei2HeadlessIcon from "./CustomIcons/Ei2HeadlessIcon";
 
 /* DATA */
 import DefaultNoteSet from "/src/assets/decks/default.json";
@@ -178,10 +180,12 @@ function RhythmGame() {
   const titiIcon = Ei2Icon();
   const taBlockIcon = Qu1BlockIcon();
   const titiBlockIcon = Ei2BlockIcon();
+  const taHeadlessIcon = Qu1HeadlessIcon();
+  const titiHeadlessIcon = Ei2HeadlessIcon();
 
   const rhythmDisplay = {
-    ei_2: titiIcon,
-    qu_1: taIcon,
+    ei_2: titiHeadlessIcon,
+    qu_1: taHeadlessIcon,
   };
 
   const rhythmName = {
@@ -190,8 +194,8 @@ function RhythmGame() {
   };
 
   const rhythmToBlock = {
-    ei_2: titiBlockIcon,
-    qu_1: taBlockIcon
+    ei_2: titiHeadlessIcon,
+    qu_1: taHeadlessIcon
   }
 
   const promptRef = useRef();
