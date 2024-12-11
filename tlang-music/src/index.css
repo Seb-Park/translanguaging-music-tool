@@ -21,7 +21,7 @@
   --selected-blue: rgb(155, 230, 255);
 }
 
-header {
+.top-header {
   font-size: 30px;
   position: absolute;
   width: 100%;
