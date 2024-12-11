@@ -1,13 +1,32 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import RhythmGame from "./components/RhythmGame";
+import { useNavigate } from "react-router-dom";
+import GameButton from "./components/GameButton";
 import "./App.css";
 
 function App() {
+  const navigate = useNavigate();
+
   return (
     <>
-      <RhythmGame />
+      <div className="game-btn-row">
+        <GameButton
+          onClick={() => {
+            navigate("/ritmo");
+          }}
+        >
+          Ritmo / Rhythm
+        </GameButton>
+        <GameButton
+          onClick={() => {
+            navigate("/lexico");
+          }}
+        >
+          Lexico / Words
+        </GameButton>
+        <GameButton>Tono / Tone</GameButton>
+      </div>
     </>
   );
 }

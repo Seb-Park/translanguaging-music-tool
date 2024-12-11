@@ -291,6 +291,7 @@ function RhythmGame() {
         // a resize event listener
       )}
       <h1>Juego De Ritmo - Rhythm Game</h1>
+      
       <h2>Imita el Ritmo! - Imitate the Rhythm!</h2>
       {/* <p className="prompt-text">{promptSurface.join("-")}</p> */}
       <PromptField

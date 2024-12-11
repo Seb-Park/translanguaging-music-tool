@@ -1,0 +1,33 @@
+{
+  "terms": [
+    { "es": ["Nota"], "en": ["Note"] },
+    { "es": ["Tono"], "en": ["Tone"] },
+    { "es": ["Alto"], "en": ["High"] },
+    { "es": ["Bajito"], "en": ["Low"] },
+    { "es": ["Bailar"], "en": ["Dance"] },
+    { "es": ["Aplaudir"], "en": ["Clap"] },
+    { "es": ["Cantar"], "en": ["Sing"] },
+    { "es": ["Ritmo"], "en": ["Rhythm", "Beat"] },
+    { "es": ["Verso"], "en": ["Verse"] },
+    { "es": ["Tempo"], "en": ["Tempo"] },
+    { "es": ["Rapido"], "en": ["Fast"] },
+    { "es": ["Lento"], "en": ["Slow"] },
+    { "es": ["Letras"], "en": ["Lyrics"] },
+    {
+      "es": ["Pregunta y Respuesta", "Pregunta y Responde"],
+      "en": ["Question and Answer"]
+    },
+    {
+      "es": ["Llama y responde"],
+      "en": ["Call and Response"]
+    },
+    { "es": ["Piano"], "en": ["Piano"] },
+    { "es": ["Batería"], "en": ["Drums"] },
+    { "es": ["Guitarra"], "en": ["Guitar"] },
+    { "es": ["Xilofono"], "en": ["Xylophone"] },
+    { "es": ["Claves"], "en": ["Claves"] },
+    { "es": ["Maracas"], "en": ["Maracas"] },
+    { "es": ["Trumpeta"], "en": ["Trumpet"] },
+    { "es": ["Violín"], "en": ["Violin"] }
+  ]
+}
