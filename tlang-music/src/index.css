@@ -17,6 +17,8 @@
   --note-cell-size: 150px;
 
   --horizontal-gap: 20px;
+
+  --selected-blue: rgb(155, 230, 255);
 }
 
 a {
@@ -62,6 +64,13 @@ button:focus-visible {
 
 .rhythm-game {
   align-content: center;
+  height: 100%;
+}
+
+.word-game {
+  align-content: center;
+  justify-content: center;
+  text-align: center;
   height: 100%;
 }
 
@@ -189,7 +198,7 @@ button:focus-visible {
 }
 
 .note-cell.filled {
-  background-color: rgb(155, 230, 255);
+  background-color: var(--selected-blue);
 }
 
 .note-cell-label {
@@ -236,6 +245,25 @@ button:focus-visible {
 Confetti {
   width: 100vw;
   height: 100vh;
+}
+
+/* WORD GAME SPECIFIC */
+.question-word {
+  font-size: 80px;
+}
+
+.word-btn {
+  font-size: 40px;
+}
+
+.game-btn.word-selected:enabled {
+  /* background-color: rgb(175, 255, 175); */
+  background-color: var(--selected-blue);
+}
+
+.game-btn.word-selected:disabled {
+  /* background-color: rgb(175, 255, 175); */
+  background-color: rgb(255, 205, 66);
 }
 
 @media (prefers-color-scheme: light) {
