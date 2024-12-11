@@ -1,0 +1,35 @@
+.question {
+  font-size: 40px;
+}
+
+.game-btn-row {
+  width: clamp(90vw, 50px, 50px);
+}
+
+.question-word {
+  font-size: 80px;
+}
+
+.word-btn {
+  font-size: 40px;
+}
+
+.game-btn.word-correct:enabled {
+  /* background-color: rgb(175, 255, 175); */
+  background-color: var(--correct-green);
+}
+
+.game-btn.word-selected:enabled {
+  /* background-color: rgb(175, 255, 175); */
+  background-color: var(--selected-blue);
+}
+
+.game-btn.word-selected:disabled {
+  /* background-color: rgb(175, 255, 175); */
+  background-color: rgb(255, 205, 66);
+}
+
+:root {
+  --selected-blue: rgb(155, 230, 255);
+  --correct-green: rgb(155, 255, 193);
+}

@@ -259,25 +259,6 @@ Confetti {
   height: 100vh;
 }
 
-/* WORD GAME SPECIFIC */
-.question-word {
-  font-size: 80px;
-}
-
-.word-btn {
-  font-size: 40px;
-}
-
-.game-btn.word-selected:enabled {
-  /* background-color: rgb(175, 255, 175); */
-  background-color: var(--selected-blue);
-}
-
-.game-btn.word-selected:disabled {
-  /* background-color: rgb(175, 255, 175); */
-  background-color: rgb(255, 205, 66);
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
