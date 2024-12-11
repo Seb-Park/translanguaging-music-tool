@@ -2,9 +2,9 @@
   font-size: 40px;
 }
 
-.game-btn-row {
+/* .game-btn-row.word-btn {
   width: clamp(90vw, 50px, 50px);
-}
+} */
 
 .question-word {
   font-size: 80px;
