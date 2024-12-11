@@ -2,11 +2,13 @@ import WordBank from "/src/assets/wordbanks/wordbank.json";
 import GameButton from "./GameButton";
 import { useState, useEffect, useRef } from "react";
 import { shuffleArray } from "../utils/ShuffleArray";
-import { wait } from "../utils/Wait";
 
 import { IoPlaySkipForward as SkipIcon } from "react-icons/io5";
 import { FaCheckCircle as CheckIcon } from "react-icons/fa";
 import Confetti from "react-confetti";
+
+import defaultSoundManager from "../utils/SoundManager";
+import { wait } from "../utils/Wait";
 
 const WordGame = () => {
   const spanishToEnglish = useRef({});
@@ -17,6 +19,8 @@ const WordGame = () => {
   const unchosenSpanishWords = useRef(new Set());
   const unchosenEnglishWords = useRef(new Set());
   const unchosenWords = useRef(new Set());
+  const questionPhrase = useRef("");
+  const checkPhrase = useRef("");
   const terms = WordBank["terms"];
 
   const [currentWord, setCurrentWord] = useState(null);
@@ -25,12 +29,19 @@ const WordGame = () => {
   const [currentGuess, setCurrentGuess] = useState("");
   const [currentGuessIndex, setCurrentGuessIndex] = useState(-1);
   const [isConfettiFalling, setIsConfettiFalling] = useState(false);
-  const [isTransitioningWords, setIsTransitioningWords] = useState(false)
+  const [isTransitioningWords, setIsTransitioningWords] = useState(false);
   const [confettiExists, setConfettiExists] = useState(false);
   const [buttonStatuses, setButtonStatuses] = useState([]);
 
   const waitBetweenQuestions = 3000;
   const numberOfOptions = 3;
+
+  useEffect(() => {
+    defaultSoundManager.loadSound(
+      "gliss",
+      "/assets/audio/rhythm_game/effects/gliss.wav"
+    );
+  }, []);
 
   useEffect(() => {
     const spanishToEnglishTemp = {};
@@ -125,6 +136,8 @@ const WordGame = () => {
     setCurrentOptions(shuffleArray([...answerOptions]));
     setButtonStatuses(Array(numberOfOptions).fill(0));
     setCurrentGuess("");
+    questionPhrase.current = getQuestionString(chosenLanguage);
+    checkPhrase.current = getCheckButtonString(chosenLanguage);
   };
 
   const disableOption = (i) => {
@@ -133,21 +146,55 @@ const WordGame = () => {
     setButtonStatuses(temp);
   };
 
+  const getQuestionString = (lang) => {
+    if (lang == "es") {
+      const choices = [
+        "Cómo se dice en inglés?",
+        "What does this word mean in English?",
+        "How do you say this word in English?",
+      ];
+      return choices[Math.floor(Math.random() * choices.length)];
+    } else if (lang == "en") {
+      const choices = [
+        "How do you say this in Spanish?",
+        "Qué significa en español?",
+        "Cómo se dice en español?",
+      ];
+      return choices[Math.floor(Math.random() * choices.length)];
+    }
+    return "";
+  };
+
+  const getCheckButtonString = () => {
+    const choices = ["chequear", "check"];
+    return choices[Math.floor(Math.random() * choices.length)];
+  };
+
   const guess = (word, index) => {
     setCurrentGuess(word);
     setCurrentGuessIndex(index);
   };
 
+  const onAnswerCorrect = async () => {
+    const newButtonStatuses = [];
+    currentOptions.forEach((w, i) => {
+      newButtonStatuses.push(i == currentGuessIndex ? 1 : -1);
+    });
+    setButtonStatuses(newButtonStatuses);
+    defaultSoundManager.playSound("gliss");
+    setConfettiExists(true);
+    setIsConfettiFalling(true);
+    setIsTransitioningWords(true);
+    await wait(waitBetweenQuestions / 2);
+    setIsConfettiFalling(false);
+    await wait(waitBetweenQuestions / 2);
+    chooseNewWord();
+    setIsTransitioningWords(false);
+  };
+
   const checkGuess = async () => {
     if (currentGuess == currentAnswer) {
-      setConfettiExists(true);
-      setIsConfettiFalling(true);
-      setIsTransitioningWords(true);
-      await wait(waitBetweenQuestions / 2);
-      setIsConfettiFalling(false);
-      await wait(waitBetweenQuestions / 2);
-      chooseNewWord();
-      setIsTransitioningWords(false);
+      onAnswerCorrect();
     } else {
       disableOption(currentGuessIndex);
     }
@@ -167,7 +214,7 @@ const WordGame = () => {
 
       {currentWord != null ? (
         <>
-          <p>Palabra/Word:</p>
+          <p className="question">{questionPhrase.current}</p>
           <div className="question-word">{currentWord}</div>
 
           <div className="game-btn-row">
@@ -178,7 +225,10 @@ const WordGame = () => {
                 }}
                 key={word}
                 className={
-                  "word-btn " + (word == currentGuess ? "word-selected" : "")
+                  "word-btn " +
+                  (buttonStatuses[index] === 1
+                    ? "word-correct"
+                    : word == currentGuess && "word-selected")
                 }
                 disabled={buttonStatuses[index] === -1}
               >
@@ -186,12 +236,14 @@ const WordGame = () => {
               </GameButton>
             ))}
           </div>
-          <GameButton
-            onClick={checkGuess}
-            disabled={currentGuess == "" || isTransitioningWords}
-          >
-            chequear {/*<CheckIcon />*/}
-          </GameButton>
+          <div className="game-btn-row">
+            <GameButton
+              onClick={checkGuess}
+              disabled={currentGuess == "" || isTransitioningWords}
+            >
+              {checkPhrase.current}
+            </GameButton>
+          </div>
         </>
       ) : (
         <GameButton onClick={chooseNewWord}>Empezar</GameButton>

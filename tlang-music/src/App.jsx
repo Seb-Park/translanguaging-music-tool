@@ -23,7 +23,7 @@ function App() {
             navigate("/lexico");
           }}
         >
-          Lexico / Words
+          Léxico / Words
         </GameButton>
         <GameButton>Tono / Tone</GameButton>
       </div>
