@@ -21,6 +21,18 @@
   --selected-blue: rgb(155, 230, 255);
 }
 
+header {
+  font-size: 30px;
+  position: absolute;
+  width: 100%;
+  top: 20px;
+  left: 20px;
+}
+
+.header-home {
+  float: left;
+}
+
 a {
   font-weight: 500;
   color: #646cff;

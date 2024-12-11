@@ -290,7 +290,7 @@ function RhythmGame() {
         // TODO: Make responsive to size by separating out component and adding
         // a resize event listener
       )}
-      <header><h1>Juego De Ritmo - Rhythm Game</h1></header>
+      <h1>Juego De Ritmo - Rhythm Game</h1>
       
       <h2>Imita el Ritmo! - Imitate the Rhythm!</h2>
       {/* <p className="prompt-text">{promptSurface.join("-")}</p> */}
