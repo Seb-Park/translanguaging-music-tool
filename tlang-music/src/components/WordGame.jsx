@@ -232,7 +232,7 @@ const WordGame = () => {
                 }
                 disabled={buttonStatuses[index] === -1}
               >
-                {word.toLowerCase()}
+                {index}. {word.toLowerCase()}
               </GameButton>
             ))}
           </div>
