@@ -49,20 +49,24 @@ class SoundManager {
 
   async playSoundForTime(name, time) {
     if (this.sounds[name]) {
-      this.sounds[name].currentTime = 0;
-      const startTime = Date.now();
-      await this.waitForPlaying(this.sounds[name]);
-      // Attempt at fixing the fact that the sound doesn't always play right
-      // away when it's first played so the first one gets timed and then gets
-      // cut off too early because it didn't start as soon as it got timed.
-      // Doesn't work.
-      this.playing[name] = true;
-      await this.wait(time);
-      //   await this.wait(time + (Date.now() - startTime) * 10);
-      await this.sounds[name].pause();
-      //   console.log(this.sounds[name].currentTime);
-      this.sounds[name].currentTime = 0;
-      this.playing[name] = false;
+      if (time < 0) {
+        await this.playSoundThrough(name);
+      } else {
+        this.sounds[name].currentTime = 0;
+        const startTime = Date.now();
+        await this.waitForPlaying(this.sounds[name]);
+        // Attempt at fixing the fact that the sound doesn't always play right
+        // away when it's first played so the first one gets timed and then gets
+        // cut off too early because it didn't start as soon as it got timed.
+        // Doesn't work.
+        this.playing[name] = true;
+        await this.wait(time);
+        //   await this.wait(time + (Date.now() - startTime) * 10);
+        await this.sounds[name].pause();
+        //   console.log(this.sounds[name].currentTime);
+        this.sounds[name].currentTime = 0;
+        this.playing[name] = false;
+      }
     }
   }
 

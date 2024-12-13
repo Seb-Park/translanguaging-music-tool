@@ -202,6 +202,9 @@ function RhythmGame() {
 
     let allCorrect = true;
 
+    // create the sequence of strings that will also include
+    // how many spaces the word is from the end so that we 
+    // can get the right clip with the right intonation
     const sequence = promptSurface.map((word, i) => {
       const j = promptSpacesFromEnd.current[i];
       return `${word}_${j < 3 ? j : 0}`;

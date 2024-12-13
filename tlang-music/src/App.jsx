@@ -25,7 +25,13 @@ function App() {
         >
           Léxico / Words
         </GameButton>
-        <GameButton>Tono / Tone</GameButton>
+        <GameButton
+          onClick={() => {
+            navigate("/tono");
+          }}
+        >
+          Tono / Tone
+        </GameButton>
       </div>
     </>
   );

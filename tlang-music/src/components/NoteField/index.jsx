@@ -4,7 +4,14 @@ import { useRef, forwardRef, useImperativeHandle } from "react";
 
 const NoteField = forwardRef(
   (
-    { spaces, userInput, toDisplay = null, toLabel = null, className = "" },
+    {
+      spaces,
+      userInput,
+      toDisplay = null,
+      toLabel = null,
+      className = "",
+      toColor = null,
+    },
     ref
   ) => {
     const childrenRefs = Array.from({ length: spaces }, () => useRef());
@@ -45,6 +52,7 @@ const NoteField = forwardRef(
             label={toLabel != null && toLabel[userInput[index]]}
             key={index}
             ref={childrenRefs[index]}
+            customColor={toColor && toDisplay != null ? toColor[userInput[index]] : ""}
           />
         ))}
       </div>

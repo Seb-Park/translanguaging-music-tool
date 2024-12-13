@@ -5,6 +5,8 @@ const RhythmButtonSet = ({
   allowedRhythms,
   rhythmToSurface,
   addToAnswerFun = () => {},
+  disabled = false,
+  customColors = null,
 }) => {
   return (
     <>
@@ -15,6 +17,10 @@ const RhythmButtonSet = ({
           onClick={() => {
             addToAnswerFun(rhythm);
           }}
+          disabled={disabled}
+          customStyle={
+            customColors ? { backgroundColor: customColors[rhythm] } : {}
+          }
         >
           {typeof rhythmToSurface[rhythm] === "string"
             ? rhythmToSurface[rhythm].toUpperCase()
