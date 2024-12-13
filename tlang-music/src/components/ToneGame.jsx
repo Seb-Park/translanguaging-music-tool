@@ -13,7 +13,7 @@ import { FaVolumeHigh as SoundIcon } from "react-icons/fa6";
 import { wait } from "../utils/Wait";
 
 const ToneGame = () => {
-  const availableTones = ["e3", "g3"];
+  const availableTones = ["g3", "e3"];
 
   const tonesToColors = {
     e3: "#fcc603",
