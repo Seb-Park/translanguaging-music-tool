@@ -34,7 +34,7 @@ const WordGame = () => {
   const [buttonStatuses, setButtonStatuses] = useState([]);
 
   const waitBetweenQuestions = 3000;
-  const numberOfOptions = 3;
+  const numberOfOptions = 3 + Math.floor(Math.random() * 3);
 
   useEffect(() => {
     defaultSoundManager.loadSound(
