@@ -6,6 +6,7 @@ const GameButton = ({
   color = "secondary",
   disabled = false,
   className = "",
+  customStyle = {}
 }) => {
   return (
     <motion.button
@@ -17,6 +18,7 @@ const GameButton = ({
       className={`game-btn btn ${className}`}
       onPointerUp={disabled ? () => {} : onClick}
       disabled={disabled}
+      style={customStyle}
     >
       {children}
     </motion.button>

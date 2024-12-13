@@ -6,6 +6,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Ritmo from "./pages/Ritmo.jsx";
 import Lexico from "./pages/Lexico.jsx";
+import Tono from "./pages/Tono.jsx";
 import Header from "./components/Header.jsx";
 
 createRoot(document.getElementById("root")).render(
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />} />
         <Route path="/ritmo" element={<Ritmo />} />
         <Route path="/lexico" element={<Lexico />} />
+        <Route path="/tono" element={<Tono />} />
       </Routes>
     </Router>
   </StrictMode>
