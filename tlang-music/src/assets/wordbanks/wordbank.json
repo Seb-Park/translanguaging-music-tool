@@ -1,7 +1,7 @@
 {
   "terms": [
     { "es": ["Nota"], "en": ["Note"] },
-    { "es": ["Tono"], "en": ["Tone"] },
+    { "es": ["Tono"], "en": ["Tone", "Pitch"] },
     { "es": ["Alto"], "en": ["High"] },
     { "es": ["Bajito"], "en": ["Low"] },
     { "es": ["Bailar"], "en": ["Dance"] },
@@ -28,6 +28,7 @@
     { "es": ["Claves"], "en": ["Claves"] },
     { "es": ["Maracas"], "en": ["Maracas"] },
     { "es": ["Trumpeta"], "en": ["Trumpet"] },
-    { "es": ["Violín"], "en": ["Violin"] }
+    { "es": ["Violín"], "en": ["Violin"] }, 
+    { "es": ["Melodía"], "en": ["Melody"]}
   ]
 }
